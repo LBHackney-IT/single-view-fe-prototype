@@ -1,15 +1,14 @@
 # single-view-fe-prototype
 
-This is a front-end prototype for Single View using React in the Single SPA
-framework. It has been created as a Single SPA microfrontend and uses the
-`lbh-frontend` package for the purpose of rapid prototyping of new ideas and
-workflows for Single View.
+This is a front-end prototype for Single View using React with TypeScript.
+It uses the `lbh-frontend` package for the purpose of rapid prototyping of new
+ideas and workflows for Single View.
 
 ## Running it locally
 
 - Install all dependencies by running `yarn`.
-- Run the application with `yarn start:standalone`.
-- Load `http://localhost` in your browser.
+- Run the application with `yarn start`.
+- Load `http://localhost:3000` in your browser.
 
 ### Testing
 
