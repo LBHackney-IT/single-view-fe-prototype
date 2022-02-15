@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "single-view-fe-prototype" {
   bucket = "single-view-fe-prototype"
   tags   = module.single-view-fe-prototype.tags
-  acl    = "public-read"
+  acl    = "private"
 
   website {
     index_document = "index.html"
