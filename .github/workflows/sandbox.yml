@@ -39,7 +39,5 @@ jobs:
         run: terraform validate
       - name: Create resources
         run: terraform apply -auto-approve -var-file=sandbox.tfvars
-      - name: Build App
-        run: yarn build
       - name: Deploy app build to S3 bucket
         run: aws s3 sync ./build/ s3://single-view-fe-prototype --delete
