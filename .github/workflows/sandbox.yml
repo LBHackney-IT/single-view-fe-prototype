@@ -21,7 +21,7 @@ jobs:
     environment: sandbox
     defaults:
       run:
-        working-directory: single-view-fe-prototype
+        working-directory: terraform
     env:
       TF_WORKSPACE: sandbox
     steps:
