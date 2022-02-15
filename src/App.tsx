@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SearchView } from "./views/search";
 
 import './App.scss';
 
 function App() {
+
+    useEffect(() => {
+        fetch("https://gist.githubusercontent.com/struds/98020d59c979c8ef43c4257ad8b44e73/raw/2e8d49a26f3bced155fd2b9adc780c1cb64965e5/single-view-prototype-phone-record-agg.json")
+            .then(res => res.json())
+            .then((data) => {
+                localStorage.setItem(
+                    data.PersonalDetails.contacts[0].value,
+                    JSON.stringify(data)
+                );
+            })
+    });
+
   return (
     <div className="App">
     <header className="lbh-header">
@@ -61,6 +73,9 @@ function App() {
       <div className="lbh-container">
         <SearchView />
       </div>
+      <footer>
+        {/*  */}
+      </footer>
     </div>
   );
 }
