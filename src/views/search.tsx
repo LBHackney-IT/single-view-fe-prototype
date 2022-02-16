@@ -235,7 +235,11 @@ export const SearchView = (): JSX.Element => {
 
   function onNoteSubmit(newNote: Note) {
     setShowNoteComponent(!showNoteComponent);
-    notes.push(newNote);
+    notes.unshift(newNote);
+
+    let data = JSON.parse(localStorage.getItem(phoneNumber) || "{}");
+    data.notes = notes;
+    localStorage.setItem(phoneNumber, JSON.stringify(data));
   }
 
   function onNoteCancel() {
