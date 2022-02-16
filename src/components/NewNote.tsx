@@ -1,13 +1,5 @@
 import { useState } from "react";
-
-interface Notes {          
-    title: string,
-    description: string,
-    createdAt: string,
-    author: {
-        fullname: string,
-    }    
-}
+import { Notes } from '../interfaces/componentInterfaces';
 
 type Props = {      
     onSubmit: (note: Notes) => void;
