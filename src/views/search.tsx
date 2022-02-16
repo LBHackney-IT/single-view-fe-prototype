@@ -61,6 +61,15 @@ interface VonageEvent {
     duration: string,
 }
 
+interface Note {
+    title: string,
+    description: string,
+    createdAt: string,
+    author: {
+        fullname: string,
+    }
+}
+
 export const SearchView = (): JSX.Element => {
   const [submitted, setSubmitted] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
