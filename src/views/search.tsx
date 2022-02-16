@@ -190,7 +190,10 @@ export const SearchView = (): JSX.Element => {
             />
           </div>
           {showSearchError && (
-            <span className="govuk-error-message lbh-error-message">
+            <span
+              className="govuk-error-message lbh-error-message"
+              style={{ marginTop: "1rem" }}
+            >
               <span className="govuk-visually-hidden">Error:</span> No contact
               found with this number
             </span>

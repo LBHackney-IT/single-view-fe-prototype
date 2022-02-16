@@ -38,7 +38,10 @@ export const NewNote = (props: Props): JSX.Element => {
       </div>
       <></>
       {hasError && (
-        <span className="govuk-error-message lbh-error-message">
+        <span
+          className="govuk-error-message lbh-error-message"
+          style={{ marginTop: "1rem" }}
+        >
           <span className="govuk-visually-hidden">Error:</span>You must add some
           text to your note
         </span>
