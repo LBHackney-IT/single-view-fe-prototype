@@ -16,10 +16,11 @@ type Props = {
 
 
 export const NewNote = (props: Props): JSX.Element => {   
+    const [noteContent, setNoteContent] = useState("");
     let newNote: Notes = { 
         title: "Call to customer",
-        description: "",
-        createdAt: new Date().getTime().toString(),
+        description: noteContent,
+        createdAt: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
         author: {
             fullname: "Test User",
         }
@@ -33,7 +34,8 @@ export const NewNote = (props: Props): JSX.Element => {
       className="govuk-textarea lbh-textarea"
       id="more-detail"
       name="more-detail"
-      rows={5}      
+      rows={5}
+      onChange={(e) => {setNoteContent(e.target.value)} } 
       aria-describedby="more-detail-hint"
     ></textarea>
   </div>
@@ -52,6 +54,3 @@ export const NewNote = (props: Props): JSX.Element => {
 }
 
 
-function submitNote() {
-    console.log("submitNote");
-}

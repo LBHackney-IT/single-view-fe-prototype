@@ -62,6 +62,15 @@ interface VonageEvent {
     duration: string,
 }
 
+interface Notes {          
+  title: string,
+  description: string,
+  createdAt: string,
+  author: {
+      fullname: string,
+  }    
+}
+
 export const SearchView = (): JSX.Element => {
   const [submitted, setSubmitted] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -210,9 +219,11 @@ export const SearchView = (): JSX.Element => {
                     New Note
                 </button>}
             </div>
+            {showNoteComponent && ( <NewNote onSubmit={onNoteSubmit}/> )}
           </div>
+          
         </div>
-        {showNoteComponent && ( <NewNote onSubmit={changeNoteState}/> )}
+        
       </>
     );
   } else {
@@ -255,9 +266,10 @@ export const SearchView = (): JSX.Element => {
   }
 
 
-  function createNewNote() {   
-  }
-  function changeNoteState() {
+  
+  function onNoteSubmit(newNotes: Notes) {
     setShowNoteComponent(!showNoteComponent);
+    let notes = personalDetails?.PersonalDetails.notes;
+    notes?.push(newNotes);
   }
 }
