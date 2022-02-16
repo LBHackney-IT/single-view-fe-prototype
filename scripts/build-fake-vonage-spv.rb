@@ -57,10 +57,8 @@ for number in calls.keys do
   fullname = Faker::Name.name
   author = Faker::Name.name
   created_date = Faker::Date.between(from: '2010-09-01', to: '2020-09-01')
-  person_type_owner = "OWNER"
   gender = ["M", "F"].sample
   title = ["Mr", "Mrs", "Ms", "Dr"].sample
-  manufacturer_serial_number = SecureRandom.uuid
   dob = Faker::Date.birthday(min_age: 18, max_age: 65)
 
   county = Faker::Address.state
