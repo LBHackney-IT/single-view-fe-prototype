@@ -14,7 +14,7 @@ export const NewNote = (props: Props): JSX.Element => {
     title: "Call to customer",
     description: noteContent,
     createdAt: `${new Date().getFullYear()}-${
-      new Date().getMonth() + 1
+      0 + new Date().getMonth() + 1
     }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
     author: {
       fullname: "Test User",

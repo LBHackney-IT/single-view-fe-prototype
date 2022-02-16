@@ -217,6 +217,7 @@ export const SearchView = (): JSX.Element => {
     setShowNoteComponent(!showNoteComponent);
     let notes = personalDetails?.PersonalDetails.notes;
     notes?.push(newNotes);
+    localStorage.setItem(phoneNumber, JSON.stringify(personalDetails));
   }
 
   function onNoteCancel() {
