@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CallerList } from "../components/CallerList";
+import { NewNote } from "../components/NewNote";
 
 interface PersonalDetails {
     PersonalDetails: {
@@ -65,6 +66,7 @@ export const SearchView = (): JSX.Element => {
   const [submitted, setSubmitted] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [personalDetails, setPersonalDetails] = useState<PersonalDetails>()
+  const [showNoteComponent, setShowNoteComponent] = useState(false);
 
   if (submitted && personalDetails) {
     return (
@@ -197,15 +199,20 @@ export const SearchView = (): JSX.Element => {
                         })}
                     </tbody>
               </table>
-              <button
+            {!showNoteComponent && <button
                     className="govuk-button lbh-button"
                     data-module="govuk-button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setShowNoteComponent(true);
+                    }}   
                 >
                     New Note
-                </button>
+                </button>}
             </div>
           </div>
         </div>
+        {showNoteComponent && ( <NewNote onSubmit={changeNoteState}/> )}
       </>
     );
   } else {
@@ -246,4 +253,11 @@ export const SearchView = (): JSX.Element => {
       </>
     );
   }
-};
+
+
+  function createNewNote() {   
+  }
+  function changeNoteState() {
+    setShowNoteComponent(!showNoteComponent);
+  }
+}

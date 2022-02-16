@@ -14,7 +14,7 @@ function App() {
                     JSON.stringify(data)
                 );
             })
-    });
+    }, []);
 
   return (
     <div className="App">
