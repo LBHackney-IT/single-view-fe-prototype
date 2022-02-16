@@ -44,6 +44,8 @@ for number in calls.keys do
     end
   end
 
+  next if vonage_events.empty?
+
   telephone_number = number
 
   # generate random data
