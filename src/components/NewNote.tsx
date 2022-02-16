@@ -25,7 +25,7 @@ export const NewNote = (props: Props): JSX.Element => {
     <>
       <div className="govuk-form-group lbh-form-group">
         <label className="govuk-label lbh-label" htmlFor="more-detail">
-          Please enter your note below.
+          Enter your note below.
         </label>
         <textarea
           className="govuk-textarea lbh-textarea"
