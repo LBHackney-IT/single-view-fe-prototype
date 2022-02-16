@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CallerList } from "../components/CallerList";
+import { NewNote } from "../components/NewNote";
 
 interface PersonalDetails {
     PersonalDetails: {
@@ -61,10 +62,20 @@ interface VonageEvent {
     duration: string,
 }
 
+interface Notes {          
+  title: string,
+  description: string,
+  createdAt: string,
+  author: {
+      fullname: string,
+  }    
+}
+
 export const SearchView = (): JSX.Element => {
   const [submitted, setSubmitted] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [personalDetails, setPersonalDetails] = useState<PersonalDetails>()
+  const [showNoteComponent, setShowNoteComponent] = useState(false);
 
   if (submitted && personalDetails) {
     return (
@@ -197,15 +208,22 @@ export const SearchView = (): JSX.Element => {
                         })}
                     </tbody>
               </table>
-              <button
+            {!showNoteComponent && <button
                     className="govuk-button lbh-button"
                     data-module="govuk-button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setShowNoteComponent(true);
+                    }}   
                 >
                     New Note
-                </button>
+                </button>}
             </div>
+            {showNoteComponent && ( <NewNote onSubmit={onNoteSubmit}/> )}
           </div>
+          
         </div>
+        
       </>
     );
   } else {
@@ -246,4 +264,12 @@ export const SearchView = (): JSX.Element => {
       </>
     );
   }
-};
+
+
+  
+  function onNoteSubmit(newNotes: Notes) {
+    setShowNoteComponent(!showNoteComponent);
+    let notes = personalDetails?.PersonalDetails.notes;
+    notes?.push(newNotes);
+  }
+}
