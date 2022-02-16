@@ -9,6 +9,7 @@ export const SearchView = (): JSX.Element => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [personalDetails, setPersonalDetails] = useState<PersonalDetails>()
   const [showNoteComponent, setShowNoteComponent] = useState(false);
+  const [showSearchError, setShowSearchError] = useState(false);
 
   if (submitted && personalDetails) {
     return (
@@ -165,13 +166,7 @@ export const SearchView = (): JSX.Element => {
         <h1>Welcome to Single View</h1>
         <h2>Search by phone number</h2>
         <form
-          onSubmit={(e: React.SyntheticEvent) => {
-            e.preventDefault();
-            setSubmitted(true);
-            setPersonalDetails(JSON.parse(
-                localStorage.getItem(phoneNumber) || ""
-            ));
-          }}
+          onSubmit={onSearchSubmit}
         >
           <div className="govuk-form-group lbh-form-group">
             <input
@@ -180,15 +175,18 @@ export const SearchView = (): JSX.Element => {
               name="phoneNumber"
               type="text"
               value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              onChange={onSearchChange}
             />
           </div>
+          {showSearchError && <span className="govuk-error-message lbh-error-message">
+        <span className="govuk-visually-hidden">Error:</span> No contact found with this number
+        </span>} 
           <button
             className="govuk-button lbh-button"
             data-module="govuk-button"
           >
             Search
-          </button>
+          </button>         
         </form>
         <div className="lbh-container">
             <h2>Live Calls</h2>
@@ -205,4 +203,24 @@ export const SearchView = (): JSX.Element => {
     let notes = personalDetails?.PersonalDetails.notes;
     notes?.push(newNotes);
   }
+
+  function onSearchSubmit(e: React.SyntheticEvent) {
+    e.preventDefault();
+     let personalDetails = localStorage.getItem(phoneNumber);
+    if (personalDetails) {
+         setPersonalDetails(JSON.parse(
+         personalDetails));
+         setSubmitted(true);    
+      } else {
+        setShowSearchError(true);
+      }
+  }
+
+
+  function onSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setPhoneNumber(e.target.value)
+    setShowSearchError(false);
+  }
+
+  
 }
