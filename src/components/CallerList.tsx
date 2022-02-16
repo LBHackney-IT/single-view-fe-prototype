@@ -1,8 +1,5 @@
-import React from "react";
+import { Caller } from '../interfaces/componentInterfaces';
 
-interface Caller {
-    phoneNumber: string
-};
 
 export const CallerList = (): JSX.Element => {
 
