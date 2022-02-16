@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Notes } from "../interfaces/componentInterfaces";
+import { Note } from "../interfaces/componentInterfaces";
 
 type Props = {
-  onSubmit: (note: Notes) => void;
+  onSubmit: (note: Note) => void;
   onCancel: () => void;
 };
 
@@ -10,7 +10,7 @@ export const NewNote = (props: Props): JSX.Element => {
   const [noteContent, setNoteContent] = useState("");
   const [hasError, setHasError] = useState(false);
 
-  let newNote: Notes = {
+  let newNote: Note = {
     title: "Call to customer",
     description: noteContent,
     createdAt: `${new Date().getFullYear()}-${

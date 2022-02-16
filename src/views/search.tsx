@@ -3,23 +3,16 @@ import { CallerList } from "../components/CallerList";
 import { NewNote } from "../components/NewNote";
 import {
   PersonalDetails,
-  Notes,
+  Note,
   VonageEvent,
 } from "../interfaces/viewInterfaces";
-
-interface Note {
-    title: string,
-    description: string,
-    createdAt: string,
-    author: {
-        fullname: string,
-    }
-}
 
 export const SearchView = (): JSX.Element => {
   const [submitted, setSubmitted] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [personalDetails, setPersonalDetails] = useState<PersonalDetails>();
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [VonageEvents, setVonageEvents] = useState<VonageEvent[]>([]);
   const [showNoteComponent, setShowNoteComponent] = useState(false);
   const [showSearchError, setShowSearchError] = useState(false);
 
@@ -39,8 +32,8 @@ export const SearchView = (): JSX.Element => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-one-third">
             <h2 className="govuk-heading-l">
-              {personalDetails.PersonalDetails.title_refcode}{" "}
-              {personalDetails.PersonalDetails.full_name}
+              {personalDetails.title_refcode}{" "}
+              {personalDetails.full_name}
             </h2>
             <dl className="govuk-summary-list lbh-summary-list">
               <div className="govuk-summary-list__row">
@@ -48,7 +41,7 @@ export const SearchView = (): JSX.Element => {
                   Date of birth
                 </dt>
                 <dd className="govuk-summary-list__value">
-                  {personalDetails.PersonalDetails.date_of_birth}
+                  {personalDetails.date_of_birth}
                 </dd>
               </div>
             </dl>
@@ -61,7 +54,7 @@ export const SearchView = (): JSX.Element => {
                     Phone numbers
                   </dt>
                   <dd className="govuk-summary-list__value">
-                    {personalDetails.PersonalDetails.contacts.map(
+                    {personalDetails.contacts.map(
                       (contact, index) => {
                         return (
                           <div key={index} className="govuk-body">
@@ -78,7 +71,7 @@ export const SearchView = (): JSX.Element => {
                   </dt>
                   <dd className="govuk-summary-list__value">
                     {
-                      personalDetails.PersonalDetails.Emails[0].MainEmail
+                      personalDetails.Emails[0].MainEmail
                         .email_address
                     }
                   </dd>
@@ -94,7 +87,7 @@ export const SearchView = (): JSX.Element => {
                     Known addresses
                   </dt>
                   <dd className="govuk-summary-list__value">
-                    {personalDetails.PersonalDetails.Addresses.map(
+                    {personalDetails.Addresses.map(
                       (address, index) => {
                         return (
                           <div key={index}>
@@ -140,11 +133,11 @@ export const SearchView = (): JSX.Element => {
           </div>
 
           <div className="govuk-grid-column-two-thirds">
-            <div className="lbh-container">
-              <h2 className="govuk-heading-m">History</h2>
+          <div className="lbh-container">
+              <h2 className="govuk-heading-m">Notes</h2>
               <table className="govuk-table lbh-table">
                 <tbody className="govuk-table__body">
-                  {personalDetails.PersonalDetails.notes.map((note, index) => {
+                  {notes.map((note: Note, index: number) => {
                     return (
                       <tr className="govuk-table__row" key={index}>
                         <td className="govuk-table__cell">{note.createdAt}</td>
@@ -178,8 +171,26 @@ export const SearchView = (): JSX.Element => {
             {showNoteComponent && (
               <NewNote onSubmit={onNoteSubmit} onCancel={onNoteCancel} />
             )}
+          <div className="lbh-container">
+              <h2 className="govuk-heading-m">Call History</h2>
+              <table className="govuk-table lbh-table">
+                <tbody className="govuk-table__body">
+                  {VonageEvents.map((vonageEvent: VonageEvent, index: number) => {
+                    return (
+                      <tr className="govuk-table__row" key={index}>
+                        <td className="govuk-table__cell">{vonageEvent.start_time}</td>
+                        <td className="govuk-table__cell">{vonageEvent.service_name}</td>
+                        <td className="govuk-table__cell">{vonageEvent.call_direction}</td>
+                        <td className="govuk-table__cell">{vonageEvent.phone_number}</td>
+                        <td className="govuk-table__cell">{vonageEvent.duration}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+          </div>
       </>
     );
   } else {
@@ -222,10 +233,9 @@ export const SearchView = (): JSX.Element => {
     );
   }
 
-  function onNoteSubmit(newNotes: Notes) {
+  function onNoteSubmit(newNote: Note) {
     setShowNoteComponent(!showNoteComponent);
-    let notes = personalDetails?.PersonalDetails.notes;
-    notes?.push(newNotes);
+    notes.push(newNote);
   }
 
   function onNoteCancel() {
@@ -234,13 +244,18 @@ export const SearchView = (): JSX.Element => {
 
   function onSearchSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    let personalDetails = localStorage.getItem(phoneNumber);
-    if (personalDetails) {
-      setPersonalDetails(JSON.parse(personalDetails));
-      setSubmitted(true);
-    } else {
-      setShowSearchError(true);
+
+    let data = JSON.parse(localStorage.getItem(phoneNumber) || "{}");
+
+    if (! data.PersonalDetails) {
+        setShowSearchError(true);
+        return;
     }
+
+    setSubmitted(true);
+    setPersonalDetails(data.PersonalDetails);
+    setNotes(data.notes || []);
+    setVonageEvents(data.vonage_events || []);
   }
 
   function onSearchChange(e: React.ChangeEvent<HTMLInputElement>) {

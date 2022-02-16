@@ -1,4 +1,4 @@
-export interface Notes {          
+export interface Note {          
     title: string,
     description: string,
     createdAt: string,

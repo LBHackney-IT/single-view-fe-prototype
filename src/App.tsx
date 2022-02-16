@@ -4,18 +4,23 @@ import { SearchView } from "./views/search";
 import "./App.scss";
 
 function App() {
-  useEffect(() => {
-    fetch(
-      "https://gist.githubusercontent.com/struds/98020d59c979c8ef43c4257ad8b44e73/raw/2e8d49a26f3bced155fd2b9adc780c1cb64965e5/single-view-prototype-phone-record-agg.json"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        localStorage.setItem(
-          data.PersonalDetails.contacts[0].value,
-          JSON.stringify(data)
-        );
-      });
-  }, []);
+
+    // Load mock data
+    useEffect(() => {
+        fetch("data/call-notes-person-aggregation-small.json")
+          .then((res) => res.json())
+          .then((data) => {
+            for (let item in data) {
+                localStorage.setItem(item, JSON.stringify(data[item]));
+            }
+        })
+        .then(() => {
+            console.log("Data loaded");
+        })
+        .catch(() => {
+            console.error("Failed to load call data")
+        });
+    }, []);
 
   return (
     <div className="App">
