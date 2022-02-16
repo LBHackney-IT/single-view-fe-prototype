@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CallerList } from "../components/CallerList";
 import { NewNote } from "../components/NewNote";
-import { PersonalDetails, Notes, VonageEvent } from "./viewInterfaces";
+import { PersonalDetails, Notes, VonageEvent } from "../interfaces/viewInterfaces";
 
 
 export const SearchView = (): JSX.Element => {
