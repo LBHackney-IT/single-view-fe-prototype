@@ -14,8 +14,6 @@ require 'csv'
 
 file = ARGV[0] || "vonage-redacted.csv"
 
-puts "Reading... #{file}"
-
 # read in vonage data
 data = CSV.read(file)
 
@@ -27,7 +25,6 @@ for row in data do
 end
 
 for number in calls.keys do
-  puts number
 
   vonage_events = []
 
@@ -47,6 +44,8 @@ for number in calls.keys do
     end
   end
 
+  next if vonage_events.empty?
+
   telephone_number = number
 
   # generate random data
@@ -56,10 +55,13 @@ for number in calls.keys do
   hex_id = Faker::Alphanumeric.alphanumeric(number: 15)
   email = Faker::Internet.email
   fullname = Faker::Name.name
+  author = Faker::Name.name
   created_date = Faker::Date.between(from: '2010-09-01', to: '2020-09-01')
   person_type_owner = "OWNER"
-  manufacturer = ["BLAB", "SONY", "TRISATR"].sample
+  gender = ["M", "F"].sample
+  title = ["Mr", "Mrs", "Ms", "Dr"].sample
   manufacturer_serial_number = SecureRandom.uuid
+  dob = Faker::Date.birthday(min_age: 18, max_age: 65)
 
   county = Faker::Address.state
   country = "UK"
@@ -68,46 +70,52 @@ for number in calls.keys do
   address2 = Faker::Address.street_address
   postcode = Faker::Address.postcode
 
+  tags = ["complaint", "update", "repairs", "water", "plumbing", "door", "lights", "covid"].sample(3)
+  note = Faker::Hipster.sentences.sample
+  note_title = Faker::Book.title
+
+  date = Faker::Time.backward(days: 14, period: :evening) 
+
+  category = ["Repairs","Covid","Housing","Tax","General Query"].sample
+
   data = {
     "#{telephone_number}": {
       "PersonalDetails": {
-        "personID": "12356577",
-        "title_refcode": "Dr",
-        "gender_refcode": "M",
-        "first_name": "John",
-        "last_name": "Doe",
-        "phonetic_first_name": "Jon",
-        "phonetic_last_name": "Doe",
-        "full_name": "John Doe",
-        "nickname": "johnny123",
-        "date_of_birth": "31/12/1980",
+        "personID": person_uuid,
+        "title_refcode": title,
+        "gender_refcode": gender,
+        "first_name": fullname.split(/\s+/).first,
+        "last_name": fullname.split(/\s+/).last,
+        "phonetic_first_name": fullname.split(/\s+/).first,
+        "phonetic_last_name": fullname.split(/\s+/).last,
+        "full_name": fullname,
+        "nickname": fullname.split(/\s+/).first,
+        "date_of_birth": dob,
         "preferred_language_refcode": "en-US",
-        "home_country_2l": "CH",
+        "home_country_2l": "UK",
         "Addresses": [
           {
             "address_contact_type_refcode": "Home",
-            "address_line_1": "Avenue de Cour",
-            "address_line_2": "Bataliere",
+            "address_line_1": address1,
+            "address_line_2": address2,
             "address_line_3": "",
             "address_line_4": "",
             "address_line_5": "",
-            "postal_code": "1007",
+            "postal_code": postcode,
             "post_box": "",
-            "district": "Lausanne",
-            "city": "Lausanne",
-            "area": "Vaud",
-            "region": "Lausanne",
+            "district": county,
+            "city": town,
+            "area": county,
+            "region": county,
             "locality": "Cour",
-            "country_2l": "CH",
-            "latitude": "46.5172",
-            "longitude": "6.63",
-            "last_updated_date": "2016-12-31T12:00:00.271Z"
+            "country_2l": "UK",
+            "last_updated_date": date
           }
         ],
         "Emails": [
           {
             "MainEmail": {
-              "email_address": "John.Doe@somedomain.com"
+              "email_address": email
             }
           }
         ],
@@ -115,7 +123,7 @@ for number in calls.keys do
           {
             "contactType": "phone",
             "subType": "correspondenceAddress",
-            "value": "800-123-4567",
+            "value": telephone_number,
             "description": "home",
             "addressExtended": {
               "isOverseasAddress": "false",
@@ -127,29 +135,29 @@ for number in calls.keys do
       "vonage_events": vonage_events,
       "notes": [
         {
-          "title": "Note Title",
-          "description": "some notes to attach to an object",
+          "title": note_title,
+          "description": note,
           "targetType": "repair",
-          "createdAt": "2021-02-19 15:12:00",
+          "createdAt": date,
           "attachments": [
             {
-              "title": "document 1",
-              "description": "document 1 provided for reason X",
+              "title": "Evidence (photo)",
+              "description": "document 1 provided for reason evidence of identity",
               "type?": "Identification",
               "uri": "https://aws.com/document1.pdf",
-              "valid-up-to-datetime": "2021-08-19 15:12:00"
+              "valid-up-to-datetime": "2023-08-19 15:12:00"
             }
           ],
           "categorisation": {
-            "category": "Appointments",
-            "sub-category": "subcat1",
-            "description": "some description"
+            "category": "Repairs",
+            "sub-category": "Kitchen",
+            "description": "plumbing"
           },
           "author": {
-            "fullname": "Mehdi Kimakhe",
-            "email": "mehdi.kimakhe@hackney.gov.uk"
+            "fullname": author,
+            "email": "#{author}@hackney.gov.uk"
           },
-          "tags": "person, update, complaint"
+          "tags": tags
         }
       ]
     }
