@@ -1,24 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { SearchView } from "./views/search";
 
-import './App.scss';
+import "./App.scss";
 
 function App() {
-
-    useEffect(() => {
-        fetch("https://gist.githubusercontent.com/struds/98020d59c979c8ef43c4257ad8b44e73/raw/2e8d49a26f3bced155fd2b9adc780c1cb64965e5/single-view-prototype-phone-record-agg.json")
-            .then(res => res.json())
-            .then((data) => {
-                localStorage.setItem(
-                    data.PersonalDetails.contacts[0].value,
-                    JSON.stringify(data)
-                );
-            })
-    });
+  useEffect(() => {
+    fetch(
+      "https://gist.githubusercontent.com/struds/98020d59c979c8ef43c4257ad8b44e73/raw/2e8d49a26f3bced155fd2b9adc780c1cb64965e5/single-view-prototype-phone-record-agg.json"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        localStorage.setItem(
+          data.PersonalDetails.contacts[0].value,
+          JSON.stringify(data)
+        );
+      });
+  }, []);
 
   return (
     <div className="App">
-    <header className="lbh-header">
+      <header className="lbh-header">
         <div className="lbh-header__main">
           <div className="lbh-container lbh-header__wrapper">
             <div className="lbh-header__title govuk-header__logo">
@@ -59,23 +60,21 @@ function App() {
         </div>
       </header>
       <div className="lbh-container">
-          <div className="govuk-phase-banner lbh-phase-banner lbh-container">
-            <p className="govuk-phase-banner__content">
+        <div className="govuk-phase-banner lbh-phase-banner lbh-container">
+          <p className="govuk-phase-banner__content">
             <strong className="govuk-tag govuk-phase-banner__content__tag lbh-tag">
-                Alpha
+              Alpha
             </strong>
             <span className="govuk-phase-banner__text">
-                This is a new service - your feedback will help us improve it.
+              This is a new service - your feedback will help us improve it.
             </span>
-            </p>
+          </p>
         </div>
-    </div>
+      </div>
       <div className="lbh-container">
         <SearchView />
       </div>
-      <footer>
-        {/*  */}
-      </footer>
+      <footer>{/*  */}</footer>
     </div>
   );
 }
