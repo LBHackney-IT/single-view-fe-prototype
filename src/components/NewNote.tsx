@@ -8,6 +8,7 @@ type Props = {
 
 export const NewNote = (props: Props): JSX.Element => {
   const [noteContent, setNoteContent] = useState("");
+  const [category, setCategory] = useState("");
   const [hasError, setHasError] = useState(false);
 
   let newNote: Note = {
@@ -16,7 +17,7 @@ export const NewNote = (props: Props): JSX.Element => {
     createdAt: `${new Date().getFullYear()}-${
       0 + new Date().getMonth() + 1
     }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
-    targetType: "Phone Contact",
+    targetType: category,
     author: {
       fullname: "Test User",
     },
@@ -48,6 +49,7 @@ export const NewNote = (props: Props): JSX.Element => {
             id="input-example"
             name="test-name"
             type="text"
+            onChange={onCategoryChange}
           />
         </div>
       </div>
@@ -84,9 +86,13 @@ export const NewNote = (props: Props): JSX.Element => {
     setHasError(false);
   }
 
+  function onCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setCategory(e.target.value);
+  }
+
   function onNoteSubmit(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
-    if (noteContent.length > 0) {
+    if (noteContent.length > 0 && category.length > 0) {
       props.onSubmit(newNote);
       setNoteContent("");
     } else {
