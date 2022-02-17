@@ -42,7 +42,7 @@ export const CallHistory = (props: Props): JSX.Element => {
             scope="col"
             className="govuk-table__header govuk-table__header--numeric"
           >
-            Call Length
+            Length
           </th>
         </thead>
         <tbody className="govuk-table__body">

@@ -25,13 +25,14 @@ export const Notes = (props: Props): JSX.Element => {
           <th
             scope="col"
             className="govuk-table__header govuk-table__header--numeric"
-            style={{ textAlign: "center" }}
+            style={{ textAlign: "left" }}
           >
             Note Detail
           </th>
           <th
             scope="col"
             className="govuk-table__header govuk-table__header--numeric"
+            style={{ textAlign: "left" }}
           >
             Created By
           </th>
