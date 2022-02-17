@@ -24,6 +24,7 @@ export const SearchView = (): JSX.Element => {
           data-module="govuk-button"
           onClick={(e) => {
             setSubmitted(false);
+            setShowSearchError(false);
           }}
         >
           Search again
@@ -198,7 +199,10 @@ export const SearchView = (): JSX.Element => {
       <>
         <h1>Welcome to Single View</h1>
         <h2>Search by phone number</h2>
-        <form onSubmit={onSearchSubmit}>
+        <form onSubmit={(e) => {
+            e.preventDefault();
+            loadRecord(phoneNumber);
+        }}>
           <div className="govuk-form-group lbh-form-group">
             <input
               className="govuk-input lbh-input"
@@ -227,7 +231,7 @@ export const SearchView = (): JSX.Element => {
         </form>
         <div className="lbh-container">
           <h2>Live Calls</h2>
-          <CallerList />
+          <CallerList loadRecord={loadRecord} />
         </div>
       </>
     );
@@ -246,9 +250,7 @@ export const SearchView = (): JSX.Element => {
     setShowNoteComponent(!showNoteComponent);
   }
 
-  function onSearchSubmit(e: React.SyntheticEvent) {
-    e.preventDefault();
-
+  function loadRecord(phoneNumber: string) {
     let data = JSON.parse(localStorage.getItem(phoneNumber) || "{}");
 
     if (! data.PersonalDetails) {
