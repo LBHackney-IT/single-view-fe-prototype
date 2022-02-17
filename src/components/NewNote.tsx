@@ -36,6 +36,20 @@ export const NewNote = (props: Props): JSX.Element => {
           onChange={onTextChange}
           aria-describedby="more-detail-hint"
         ></textarea>
+        <div
+          className="govuk-form-group lbh-form-group"
+          style={{ width: "50%" }}
+        >
+          <label className="govuk-label lbh-label" htmlFor="input-example">
+            Category
+          </label>
+          <input
+            className="govuk-input lbh-input"
+            id="input-example"
+            name="test-name"
+            type="text"
+          />
+        </div>
       </div>
       <></>
       {hasError && (
