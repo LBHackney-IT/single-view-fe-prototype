@@ -1,4 +1,4 @@
-export function formatDateString(dateString: string): string {
+export function formatDateString(dateString: string, isTime: boolean): string {
   let d = new Date(dateString);
 
   const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
@@ -7,5 +7,5 @@ export function formatDateString(dateString: string): string {
   const hh = d.getHours();
   const mm = (d.getMinutes() < 10 ? "0" : "") + d.getMinutes();
 
-  return `${da}/${mo}/${ye} ${hh}:${mm} `;
+  return isTime ? `${da}/${mo}/${ye} ${hh}:${mm}` : `${da}/${mo}/${ye}`;
 }

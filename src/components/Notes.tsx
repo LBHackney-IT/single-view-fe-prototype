@@ -49,7 +49,7 @@ export const Notes = (props: Props): JSX.Element => {
             return (
               <tr className="govuk-table__row" key={index}>
                 <td className="govuk-table__cell">
-                  {formatDateString(note.createdAt)}
+                  {formatDateString(note.createdAt, true)}
                 </td>
                 <td className="govuk-table__cell">
                   <div className="govuk-body">

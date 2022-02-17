@@ -4,6 +4,7 @@ import { Notes } from "../components/Notes";
 import { CallHistory } from "../components/CallHistory";
 import { Addresses } from "../components/Addresses";
 import { ContactInfo } from "../components/ContactInfo";
+import { formatDateString } from "../utils";
 import {
   PersonalDetails,
   Note,
@@ -42,7 +43,7 @@ export const SearchView = (): JSX.Element => {
                   Date of birth
                 </dt>
                 <dd className="govuk-summary-list__value">
-                  {personalDetails.date_of_birth}
+                  {formatDateString(personalDetails.date_of_birth, false)}
                 </dd>
               </div>
             </dl>
