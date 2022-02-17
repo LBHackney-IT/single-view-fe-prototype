@@ -32,8 +32,7 @@ export const SearchView = (): JSX.Element => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-one-third">
             <h2 className="govuk-heading-l">
-              {personalDetails.title_refcode}{" "}
-              {personalDetails.full_name}
+              {personalDetails.title_refcode} {personalDetails.full_name}
             </h2>
             <dl className="govuk-summary-list lbh-summary-list">
               <div className="govuk-summary-list__row">
@@ -54,15 +53,13 @@ export const SearchView = (): JSX.Element => {
                     Phone numbers
                   </dt>
                   <dd className="govuk-summary-list__value">
-                    {personalDetails.contacts.map(
-                      (contact, index) => {
-                        return (
-                          <div key={index} className="govuk-body">
-                            <p>{contact.value}</p>
-                          </div>
-                        );
-                      }
-                    )}
+                    {personalDetails.contacts.map((contact, index) => {
+                      return (
+                        <div key={index} className="govuk-body">
+                          <p>{contact.value}</p>
+                        </div>
+                      );
+                    })}
                   </dd>
                 </div>
                 <div className="govuk-summary-list__row govuk-summary-list__row--no-border">
@@ -70,10 +67,7 @@ export const SearchView = (): JSX.Element => {
                     Email
                   </dt>
                   <dd className="govuk-summary-list__value">
-                    {
-                      personalDetails.Emails[0].MainEmail
-                        .email_address
-                    }
+                    {personalDetails.Emails[0].MainEmail.email_address}
                   </dd>
                 </div>
               </dl>
@@ -87,45 +81,43 @@ export const SearchView = (): JSX.Element => {
                     Known addresses
                   </dt>
                   <dd className="govuk-summary-list__value">
-                    {personalDetails.Addresses.map(
-                      (address, index) => {
-                        return (
-                          <div key={index}>
-                            <div className="govuk-body">
-                              {[
-                                address.post_box,
-                                address.address_line_1,
-                                address.address_line_2,
-                                address.address_line_3,
-                                address.address_line_4,
-                                address.address_line_5,
-                                address.district,
-                                address.city,
-                                address.area,
-                                address.region,
-                                address.locality,
-                                address.postal_code,
-                                address.country_2l,
-                              ]
-                                .filter((filter) => filter)
-                                .join(", ")}
-                              <details
-                                className="govuk-details lbh-details"
-                                data-module="govuk-details"
-                              >
-                                <summary className="govuk-details__summary">
-                                  <span className="govuk-details__summary-text">
-                                    Where is this from?
-                                  </span>
-                                </summary>
-                                <div className="govuk-details__text">...</div>
-                              </details>
-                              <br />
-                            </div>
+                    {personalDetails.Addresses.map((address, index) => {
+                      return (
+                        <div key={index}>
+                          <div className="govuk-body">
+                            {[
+                              address.post_box,
+                              address.address_line_1,
+                              address.address_line_2,
+                              address.address_line_3,
+                              address.address_line_4,
+                              address.address_line_5,
+                              address.district,
+                              address.city,
+                              address.area,
+                              address.region,
+                              address.locality,
+                              address.postal_code,
+                              address.country_2l,
+                            ]
+                              .filter((filter) => filter)
+                              .join(", ")}
+                            <details
+                              className="govuk-details lbh-details"
+                              data-module="govuk-details"
+                            >
+                              <summary className="govuk-details__summary">
+                                <span className="govuk-details__summary-text">
+                                  Where is this from?
+                                </span>
+                              </summary>
+                              <div className="govuk-details__text">...</div>
+                            </details>
+                            <br />
                           </div>
-                        );
-                      }
-                    )}
+                        </div>
+                      );
+                    })}
                   </dd>
                 </div>
               </dl>
@@ -133,9 +125,37 @@ export const SearchView = (): JSX.Element => {
           </div>
 
           <div className="govuk-grid-column-two-thirds">
-          <div className="lbh-container">
+            <div className="lbh-container">
               <h2 className="govuk-heading-m">Notes</h2>
               <table className="govuk-table lbh-table">
+                <thead className="govuk-table_head">
+                  <th
+                    scope="col"
+                    className="govuk-table__header govuk-table__header--numeric"
+                    style={{ textAlign: "center" }}
+                  >
+                    Date Created
+                  </th>
+                  <th
+                    scope="col"
+                    className="govuk-table__header govuk-table__header--numeric"
+                    style={{ textAlign: "center" }}
+                  >
+                    Note Detail
+                  </th>
+                  <th
+                    scope="col"
+                    className="govuk-table__header govuk-table__header--numeric"
+                  >
+                    Created By
+                  </th>
+                  <th
+                    scope="col"
+                    className="govuk-table__header govuk-table__header--numeric"
+                  >
+                    Category
+                  </th>
+                </thead>
                 <tbody className="govuk-table__body">
                   {notes.map((note: Note, index: number) => {
                     return (
@@ -149,6 +169,9 @@ export const SearchView = (): JSX.Element => {
                         </td>
                         <td className="govuk-table__cell govuk-table__cell--numeric">
                           {note.author.fullname}
+                        </td>
+                        <td className="govuk-table__cell govuk-table__cell--numeric">
+                          {note.targetType}
                         </td>
                       </tr>
                     );
@@ -171,26 +194,74 @@ export const SearchView = (): JSX.Element => {
             {showNoteComponent && (
               <NewNote onSubmit={onNoteSubmit} onCancel={onNoteCancel} />
             )}
-          <div className="lbh-container">
+            <div className="lbh-container">
               <h2 className="govuk-heading-m">Call History</h2>
               <table className="govuk-table lbh-table">
+                <thead className="govuk-table_head">
+                  <th
+                    scope="col"
+                    className="govuk-table__header govuk-table__header--numeric"
+                    style={{ textAlign: "center" }}
+                  >
+                    Time of call
+                  </th>
+                  <th
+                    scope="col"
+                    className="govuk-table__header govuk-table__header--numeric"
+                    style={{ textAlign: "center" }}
+                  >
+                    Department
+                  </th>
+                  <th
+                    scope="col"
+                    className="govuk-table__header govuk-table__header--numeric"
+                    style={{ textAlign: "center" }}
+                  >
+                    Direction
+                  </th>
+                  <th
+                    scope="col"
+                    className="govuk-table__header govuk-table__header--numeric"
+                    style={{ textAlign: "center" }}
+                  >
+                    Number
+                  </th>
+                  <th
+                    scope="col"
+                    className="govuk-table__header govuk-table__header--numeric"
+                  >
+                    Call Length
+                  </th>
+                </thead>
                 <tbody className="govuk-table__body">
-                  {VonageEvents.map((vonageEvent: VonageEvent, index: number) => {
-                    return (
-                      <tr className="govuk-table__row" key={index}>
-                        <td className="govuk-table__cell">{vonageEvent.start_time}</td>
-                        <td className="govuk-table__cell">{vonageEvent.service_name}</td>
-                        <td className="govuk-table__cell">{vonageEvent.call_direction}</td>
-                        <td className="govuk-table__cell">{vonageEvent.phone_number}</td>
-                        <td className="govuk-table__cell">{vonageEvent.duration}</td>
-                      </tr>
-                    );
-                  })}
+                  {VonageEvents.map(
+                    (vonageEvent: VonageEvent, index: number) => {
+                      return (
+                        <tr className="govuk-table__row" key={index}>
+                          <td className="govuk-table__cell">
+                            {vonageEvent.start_time}
+                          </td>
+                          <td className="govuk-table__cell">
+                            {vonageEvent.service_name}
+                          </td>
+                          <td className="govuk-table__cell">
+                            {vonageEvent.call_direction}
+                          </td>
+                          <td className="govuk-table__cell">
+                            {vonageEvent.phone_number}
+                          </td>
+                          <td className="govuk-table__cell">
+                            {vonageEvent.duration}
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
-          </div>
+        </div>
       </>
     );
   } else {
@@ -251,9 +322,9 @@ export const SearchView = (): JSX.Element => {
 
     let data = JSON.parse(localStorage.getItem(phoneNumber) || "{}");
 
-    if (! data.PersonalDetails) {
-        setShowSearchError(true);
-        return;
+    if (!data.PersonalDetails) {
+      setShowSearchError(true);
+      return;
     }
 
     setSubmitted(true);
