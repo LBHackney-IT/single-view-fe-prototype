@@ -171,7 +171,8 @@ export const SearchView = (): JSX.Element => {
                           {note.author.fullname}
                         </td>
                         <td className="govuk-table__cell govuk-table__cell--numeric">
-                          {note.targetType}
+                          {note.targetType.charAt(0).toUpperCase() +
+                            note.targetType.slice(1)}
                         </td>
                       </tr>
                     );
