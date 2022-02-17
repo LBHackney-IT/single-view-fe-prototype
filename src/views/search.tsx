@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CallerList } from "../components/CallerList";
 import { NewNote } from "../components/NewNote";
+import { CallHistory } from "../components/CallHistory";
 import {
   PersonalDetails,
   Note,
@@ -195,72 +196,7 @@ export const SearchView = (): JSX.Element => {
             {showNoteComponent && (
               <NewNote onSubmit={onNoteSubmit} onCancel={onNoteCancel} />
             )}
-            <div className="lbh-container">
-              <h2 className="govuk-heading-m">Call History</h2>
-              <table className="govuk-table lbh-table">
-                <thead className="govuk-table_head">
-                  <th
-                    scope="col"
-                    className="govuk-table__header govuk-table__header--numeric"
-                    style={{ textAlign: "center" }}
-                  >
-                    Time of call
-                  </th>
-                  <th
-                    scope="col"
-                    className="govuk-table__header govuk-table__header--numeric"
-                    style={{ textAlign: "center" }}
-                  >
-                    Department
-                  </th>
-                  <th
-                    scope="col"
-                    className="govuk-table__header govuk-table__header--numeric"
-                    style={{ textAlign: "center" }}
-                  >
-                    Direction
-                  </th>
-                  <th
-                    scope="col"
-                    className="govuk-table__header govuk-table__header--numeric"
-                    style={{ textAlign: "center" }}
-                  >
-                    Number
-                  </th>
-                  <th
-                    scope="col"
-                    className="govuk-table__header govuk-table__header--numeric"
-                  >
-                    Call Length
-                  </th>
-                </thead>
-                <tbody className="govuk-table__body">
-                  {VonageEvents.map(
-                    (vonageEvent: VonageEvent, index: number) => {
-                      return (
-                        <tr className="govuk-table__row" key={index}>
-                          <td className="govuk-table__cell">
-                            {vonageEvent.start_time}
-                          </td>
-                          <td className="govuk-table__cell">
-                            {vonageEvent.service_name}
-                          </td>
-                          <td className="govuk-table__cell">
-                            {vonageEvent.call_direction}
-                          </td>
-                          <td className="govuk-table__cell">
-                            {vonageEvent.phone_number}
-                          </td>
-                          <td className="govuk-table__cell">
-                            {vonageEvent.duration}
-                          </td>
-                        </tr>
-                      );
-                    }
-                  )}
-                </tbody>
-              </table>
-            </div>
+            <CallHistory VonageEvents={VonageEvents} />
           </div>
         </div>
       </>
