@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Note } from "../interfaces/viewInterfaces";
 import { NewNote } from "../components/NewNote";
+import { formatDateString } from "../utils";
 
 type Props = {
   Notes: Note[];
@@ -47,7 +48,9 @@ export const Notes = (props: Props): JSX.Element => {
           {props.Notes?.map((note: Note, index: number) => {
             return (
               <tr className="govuk-table__row" key={index}>
-                <td className="govuk-table__cell">{note.createdAt}</td>
+                <td className="govuk-table__cell">
+                  {formatDateString(note.createdAt)}
+                </td>
                 <td className="govuk-table__cell">
                   <div className="govuk-body">
                     <h4>{note.title}</h4>
