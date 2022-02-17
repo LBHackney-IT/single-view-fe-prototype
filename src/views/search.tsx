@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CallerList } from "../components/CallerList";
-import { NewNote } from "../components/NewNote";
+import { Notes } from "../components/Notes";
 import { CallHistory } from "../components/CallHistory";
 import {
   PersonalDetails,
@@ -14,7 +14,6 @@ export const SearchView = (): JSX.Element => {
   const [personalDetails, setPersonalDetails] = useState<PersonalDetails>();
   const [notes, setNotes] = useState<Note[]>([]);
   const [VonageEvents, setVonageEvents] = useState<VonageEvent[]>([]);
-  const [showNoteComponent, setShowNoteComponent] = useState(false);
   const [showSearchError, setShowSearchError] = useState(false);
 
   if (submitted && personalDetails) {
@@ -126,76 +125,7 @@ export const SearchView = (): JSX.Element => {
           </div>
 
           <div className="govuk-grid-column-two-thirds">
-            <div className="lbh-container">
-              <h2 className="govuk-heading-m">Notes</h2>
-              <table className="govuk-table lbh-table">
-                <thead className="govuk-table_head">
-                  <th
-                    scope="col"
-                    className="govuk-table__header govuk-table__header--numeric"
-                    style={{ textAlign: "center" }}
-                  >
-                    Date Created
-                  </th>
-                  <th
-                    scope="col"
-                    className="govuk-table__header govuk-table__header--numeric"
-                    style={{ textAlign: "center" }}
-                  >
-                    Note Detail
-                  </th>
-                  <th
-                    scope="col"
-                    className="govuk-table__header govuk-table__header--numeric"
-                  >
-                    Created By
-                  </th>
-                  <th
-                    scope="col"
-                    className="govuk-table__header govuk-table__header--numeric"
-                  >
-                    Category
-                  </th>
-                </thead>
-                <tbody className="govuk-table__body">
-                  {notes.map((note: Note, index: number) => {
-                    return (
-                      <tr className="govuk-table__row" key={index}>
-                        <td className="govuk-table__cell">{note.createdAt}</td>
-                        <td className="govuk-table__cell">
-                          <div className="govuk-body">
-                            <h4>{note.title}</h4>
-                            {note.description}
-                          </div>
-                        </td>
-                        <td className="govuk-table__cell govuk-table__cell--numeric">
-                          {note.author.fullname}
-                        </td>
-                        <td className="govuk-table__cell govuk-table__cell--numeric">
-                          {note.targetType.charAt(0).toUpperCase() +
-                            note.targetType.slice(1)}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-              {!showNoteComponent && (
-                <button
-                  className="govuk-button lbh-button"
-                  data-module="govuk-button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowNoteComponent(true);
-                  }}
-                >
-                  New Note
-                </button>
-              )}
-            </div>
-            {showNoteComponent && (
-              <NewNote onSubmit={onNoteSubmit} onCancel={onNoteCancel} />
-            )}
+            <Notes Notes={notes} PhoneNumber={phoneNumber} />
             <CallHistory VonageEvents={VonageEvents} />
           </div>
         </div>
@@ -239,19 +169,6 @@ export const SearchView = (): JSX.Element => {
         </div>
       </>
     );
-  }
-
-  function onNoteSubmit(newNote: Note) {
-    setShowNoteComponent(!showNoteComponent);
-    notes.unshift(newNote);
-
-    let data = JSON.parse(localStorage.getItem(phoneNumber) || "{}");
-    data.notes = notes;
-    localStorage.setItem(phoneNumber, JSON.stringify(data));
-  }
-
-  function onNoteCancel() {
-    setShowNoteComponent(!showNoteComponent);
   }
 
   function onSearchSubmit(e: React.SyntheticEvent) {
