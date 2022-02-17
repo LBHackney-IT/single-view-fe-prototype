@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Note } from "../interfaces/componentInterfaces";
+import { Note } from "../interfaces/viewInterfaces";
 
 type Props = {
   onSubmit: (note: Note) => void;
