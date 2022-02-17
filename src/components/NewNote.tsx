@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Note } from "../interfaces/componentInterfaces";
+import { Note } from "../interfaces/viewInterfaces";
 
 type Props = {
   onSubmit: (note: Note) => void;
@@ -8,6 +8,7 @@ type Props = {
 
 export const NewNote = (props: Props): JSX.Element => {
   const [noteContent, setNoteContent] = useState("");
+  const [category, setCategory] = useState("");
   const [hasError, setHasError] = useState(false);
 
   let newNote: Note = {
@@ -16,6 +17,7 @@ export const NewNote = (props: Props): JSX.Element => {
     createdAt: `${new Date().getFullYear()}-${
       0 + new Date().getMonth() + 1
     }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+    targetType: category,
     author: {
       fullname: "Test User",
     },
@@ -35,6 +37,21 @@ export const NewNote = (props: Props): JSX.Element => {
           onChange={onTextChange}
           aria-describedby="more-detail-hint"
         ></textarea>
+        <div
+          className="govuk-form-group lbh-form-group"
+          style={{ width: "50%" }}
+        >
+          <label className="govuk-label lbh-label" htmlFor="input-example">
+            Category
+          </label>
+          <input
+            className="govuk-input lbh-input"
+            id="input-example"
+            name="test-name"
+            type="text"
+            onChange={onCategoryChange}
+          />
+        </div>
       </div>
       <></>
       {hasError && (
@@ -69,9 +86,13 @@ export const NewNote = (props: Props): JSX.Element => {
     setHasError(false);
   }
 
+  function onCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setCategory(e.target.value);
+  }
+
   function onNoteSubmit(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
-    if (noteContent.length > 0) {
+    if (noteContent.length > 0 && category.length > 0) {
       props.onSubmit(newNote);
       setNoteContent("");
     } else {
