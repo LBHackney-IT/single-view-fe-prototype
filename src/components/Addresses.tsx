@@ -17,7 +17,7 @@ export const Addresses = (props: Props): JSX.Element => {
             {props.PersonalDetails.Addresses.map((address, index) => {
               return (
                 <div key={index}>
-                  <div className="govuk-body">
+                  <div className="govuk-body" style={{ fontSize: "0.9em" }}>
                     {[
                       address.post_box,
                       address.address_line_1,

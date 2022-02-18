@@ -66,10 +66,12 @@ export const SearchView = (): JSX.Element => {
       <>
         <h1>Welcome to Single View</h1>
         <h2>Search by phone number</h2>
-        <form onSubmit={(e) => {
+        <form
+          onSubmit={(e) => {
             e.preventDefault();
             loadRecord(phoneNumber);
-        }}>
+          }}
+        >
           <div className="govuk-form-group lbh-form-group">
             <input
               className="govuk-input lbh-input"
