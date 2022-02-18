@@ -26,9 +26,9 @@ export const NewNote = (props: Props): JSX.Element => {
   return (
     <>
       <div className="govuk-form-group lbh-form-group">
-        <label className="govuk-label lbh-label" htmlFor="more-detail">
+        {/* <label className="govuk-label lbh-label" htmlFor="more-detail">
           Enter your note below.
-        </label>
+        </label> */}
         <textarea
           className="govuk-textarea lbh-textarea"
           id="more-detail"
@@ -36,6 +36,8 @@ export const NewNote = (props: Props): JSX.Element => {
           rows={5}
           onChange={onTextChange}
           aria-describedby="more-detail-hint"
+          placeholder="New note..."
+          value={noteContent}
         ></textarea>
         <div
           className="govuk-form-group lbh-form-group"
@@ -49,6 +51,7 @@ export const NewNote = (props: Props): JSX.Element => {
             id="input-example"
             name="test-name"
             type="text"
+            value={category}
             onChange={onCategoryChange}
           />
         </div>
@@ -70,14 +73,14 @@ export const NewNote = (props: Props): JSX.Element => {
       >
         Add note
       </button>
-      <button
+      {/* <button
         className="govuk-button govuk-secondary lbh-button lbh-button--secondary"
         data-module="govuk-button"
         onClick={props.onCancel}
         style={{ marginLeft: "1rem" }}
       >
         Cancel
-      </button>
+      </button> */}
     </>
   );
 
@@ -95,6 +98,7 @@ export const NewNote = (props: Props): JSX.Element => {
     if (noteContent.length > 0 && category.length > 0) {
       props.onSubmit(newNote);
       setNoteContent("");
+      setCategory("");
     } else {
       setHasError(true);
     }

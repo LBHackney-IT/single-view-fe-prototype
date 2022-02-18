@@ -7,17 +7,19 @@ type Props = {
 export const Addresses = (props: Props): JSX.Element => {
   return (
     <div className="lbh-container">
-      <h3 className="govuk-heading-m">Addresses</h3>
+      <h3 className="lbh-heading-h3">Addresses</h3>
       <dl className="govuk-summary-list lbh-summary-list">
         <div className="govuk-summary-list__row govuk-summary-list__row--no-border">
           <dt className="govuk-summary-list__key govuk-!-width-one-half">
-            Known addresses
+              <h5 className="lbh-heading-h5">
+                Known addresses
+              </h5>
           </dt>
           <dd className="govuk-summary-list__value">
             {props.PersonalDetails.Addresses.map((address, index) => {
               return (
                 <div key={index}>
-                  <div className="govuk-body">
+                  <div className="lbh-body-s">
                     {[
                       address.post_box,
                       address.address_line_1,
@@ -35,18 +37,6 @@ export const Addresses = (props: Props): JSX.Element => {
                     ]
                       .filter((filter) => filter)
                       .join(", ")}
-                    <details
-                      className="govuk-details lbh-details"
-                      data-module="govuk-details"
-                    >
-                      <summary className="govuk-details__summary">
-                        <span className="govuk-details__summary-text">
-                          Where is this from?
-                        </span>
-                      </summary>
-                      <div className="govuk-details__text">...</div>
-                    </details>
-                    <br />
                   </div>
                 </div>
               );

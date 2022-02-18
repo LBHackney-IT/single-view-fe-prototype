@@ -2,3 +2,18 @@
 #root {
     margin-top: 0;
 }
+.sv-timeline__card {
+    border: 1px solid;
+    padding: 1em;
+}
+.sv-timeline__card_title {
+    display: flex;
+    justify-content: space-between;
+
+    * {
+        margin: 0;
+    }
+}
+.sv-space-t {
+    margin-top: 3em;
+}

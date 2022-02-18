@@ -43,12 +43,18 @@ export const CallerList = (props: Props): JSX.Element => {
     });
 
   return (
+
     <table className="govuk-table lbh-table">
       <tbody className="govuk-table__body">
         {callerList.map((caller: Caller, index) => {
           return (
+
             <tr className="govuk-table__row" key={index}>
-              <td className="govuk-table__cell">{caller.phoneNumber}</td>
+              <td className="govuk-table__cell">
+              <p className="lbh-body-s">
+                {caller.phoneNumber}
+                </p>
+            </td>
               <td className="govuk-table__cell govuk-table__cell--numeric">
                 <a
                     href="/"
@@ -56,6 +62,7 @@ export const CallerList = (props: Props): JSX.Element => {
                         e.preventDefault();
                         props.loadRecord(caller.phoneNumber);
                     }}
+                    className="lbh-body-s"
                 >
                     Take
                 </a>

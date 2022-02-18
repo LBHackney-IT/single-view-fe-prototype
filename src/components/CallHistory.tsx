@@ -6,65 +6,27 @@ type Props = {
 
 export const CallHistory = (props: Props): JSX.Element => {
   return (
-    <div className="lbh-container">
-      <h2 className="govuk-heading-m">Call History</h2>
-      <table className="govuk-table lbh-table">
-        <thead className="govuk-table_head">
-          <th
-            scope="col"
-            className="govuk-table__header govuk-table__header--numeric"
-            style={{ textAlign: "center" }}
-          >
-            Time of call
-          </th>
-          <th
-            scope="col"
-            className="govuk-table__header govuk-table__header--numeric"
-            style={{ textAlign: "center" }}
-          >
-            Department
-          </th>
-          <th
-            scope="col"
-            className="govuk-table__header govuk-table__header--numeric"
-            style={{ textAlign: "center" }}
-          >
-            Direction
-          </th>
-          <th
-            scope="col"
-            className="govuk-table__header govuk-table__header--numeric"
-            style={{ textAlign: "center" }}
-          >
-            Number
-          </th>
-          <th
-            scope="col"
-            className="govuk-table__header govuk-table__header--numeric"
-          >
-            Length
-          </th>
-        </thead>
-        <tbody className="govuk-table__body">
-          {props.VonageEvents.map((vonageEvent: VonageEvent, index: number) => {
+    <div className="lbh-container sv-space-t">
+      <h2 className="lbh-heading-h2">Call History</h2>
+      <ol className="lbh-timeline">
+        {props.VonageEvents.map((vonageEvent: VonageEvent, index: number) => {
             return (
-              <tr className="govuk-table__row" key={index}>
-                <td className="govuk-table__cell">{vonageEvent.start_time}</td>
-                <td className="govuk-table__cell">
-                  {vonageEvent.service_name}
-                </td>
-                <td className="govuk-table__cell">
-                  {vonageEvent.call_direction}
-                </td>
-                <td className="govuk-table__cell">
-                  {vonageEvent.phone_number}
-                </td>
-                <td className="govuk-table__cell">{vonageEvent.duration}</td>
-              </tr>
+                <li className="lbh-timeline__event lbh-timeline__event--minor" key={index}>
+                    <h5 className="lbh-heading-h5">
+                        {vonageEvent.start_time}
+                    </h5>
+                    <h4 className="lbh-heading-h4">
+                        {vonageEvent.phone_number}
+                    </h4>
+                    <p className="lbh-body-s">
+                        {vonageEvent.call_direction}, {vonageEvent.service_name}
+                        <br />
+                        Duration: {vonageEvent.duration}
+                    </p>
+                </li>
             );
           })}
-        </tbody>
-      </table>
+        </ol>
     </div>
   );
 };

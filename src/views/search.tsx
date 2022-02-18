@@ -35,16 +35,18 @@ export const SearchView = (): JSX.Element => {
 
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-one-third">
-            <h2 className="govuk-heading-l">
-              {personalDetails.title_refcode} {personalDetails.full_name}
+            <h2 className="lbh-heading-h2">
+              {personalDetails.full_name}
             </h2>
             <dl className="govuk-summary-list lbh-summary-list">
               <div className="govuk-summary-list__row">
                 <dt className="govuk-summary-list__key govuk-!-width-one-half">
-                  Date of birth
+                  <h5 className="lbh-heading-h5">Date of birth</h5>
                 </dt>
                 <dd className="govuk-summary-list__value">
-                  {formatDateString(personalDetails.date_of_birth, false)}
+                    <p className="lbh-body-s">
+                        {formatDateString(personalDetails.date_of_birth, false)}
+                    </p>
                 </dd>
               </div>
             </dl>
@@ -64,8 +66,8 @@ export const SearchView = (): JSX.Element => {
   } else {
     return (
       <>
-        <h1>Welcome to Single View</h1>
-        <h2>Search by phone number</h2>
+        <h1 className="lbh-heading-h1">Welcome to Single View</h1>
+        <h3 className="lbh-heading-h3">Search by phone number</h3>
         <form onSubmit={(e) => {
             e.preventDefault();
             loadRecord(phoneNumber);
@@ -96,8 +98,8 @@ export const SearchView = (): JSX.Element => {
             Search
           </button>
         </form>
-        <div className="lbh-container">
-          <h2>Live Calls</h2>
+        <div className="lbh-container sv-space-t">
+          <h3 className="lbh-heading-h3">Live Calls</h3>
           <CallerList loadRecord={loadRecord} />
         </div>
       </>
