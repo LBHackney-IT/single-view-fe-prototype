@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export const ScratchPad = (): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -31,7 +31,12 @@ export const ScratchPad = (): JSX.Element => {
         className="lbh-collapsible__button"
         onClick={() => setOpen(!open)}
       >
-        <h2 className="lbh-heading-h3 lbh-collapsible__heading">Scratchpad</h2>
+        <h2
+          className="lbh-heading-h3 lbh-collapsible__heading"
+          style={{ marginRight: "5px" }}
+        >
+          Scratchpad
+        </h2>
         <svg width="17" height="10" viewBox="0 0 17 10">
           <path d="M2 1.5L8.5 7.5L15 1.5" strokeWidth="3" />
         </svg>
