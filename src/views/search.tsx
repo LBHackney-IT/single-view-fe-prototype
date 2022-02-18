@@ -4,6 +4,7 @@ import { Notes } from "../components/Notes";
 import { CallHistory } from "../components/CallHistory";
 import { Addresses } from "../components/Addresses";
 import { ContactInfo } from "../components/ContactInfo";
+import { ScratchPad } from "../components/ScratchPad";
 import { formatDateString } from "../utils";
 import {
   PersonalDetails,
@@ -58,6 +59,9 @@ export const SearchView = (): JSX.Element => {
             <Notes Notes={notes} PhoneNumber={phoneNumber} />
             <CallHistory VonageEvents={VonageEvents} />
           </div>
+        </div>
+        <div className="scratchpad">
+          <ScratchPad />
         </div>
       </>
     );
