@@ -10,7 +10,7 @@ export const ScratchPad = (): JSX.Element => {
           className="govuk-textarea lbh-textarea"
           id="more-detail"
           name="more-detail"
-          rows={10}
+          rows={15}
           value={content}
           aria-describedby="more-detail-hint"
           onChange={(e) => setContent(e.target.value)}
