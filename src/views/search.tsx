@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { CallerList } from "../components/CallerList";
 import { Notes } from "../components/Notes";
 import { CallHistory } from "../components/CallHistory";
+import { PersonSummary } from "../components/PersonSummary";
 import { Addresses } from "../components/Addresses";
 import { ContactInfo } from "../components/ContactInfo";
 import { ScratchPad } from "../components/ScratchPad";
-import { formatDateString } from "../utils";
 import {
   PersonalDetails,
   Note,
@@ -14,6 +14,8 @@ import {
 
 export const SearchView = (): JSX.Element => {
   const [submitted, setSubmitted] = useState(false);
+  const [showPersonalDetails, setShowPersonalDetails] = useState(true);
+  const [showNotes, setShowNotes] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [personalDetails, setPersonalDetails] = useState<PersonalDetails>();
   const [notes, setNotes] = useState<Note[]>([]);
@@ -23,45 +25,60 @@ export const SearchView = (): JSX.Element => {
   if (submitted && personalDetails) {
     return (
       <>
-        <button
-          className="govuk-button lbh-button"
-          data-module="govuk-button"
-          onClick={(e) => {
-            setSubmitted(false);
-            setShowSearchError(false);
-          }}
-        >
-          Search again
-        </button>
+        <div className="navBar">
+          <button
+            className="govuk-button lbh-button"
+            data-module="govuk-button"
+            onClick={(e) => {
+              setSubmitted(false);
+              setShowSearchError(false);
+            }}
+          >
+            Search again
+          </button>
+          <div></div>
+          <a
+            className="govuk-tabs__tab"
+            href="#personaldetails"
+            onClick={(e) => {
+              setShowPersonalDetails(true);
+              setShowNotes(false);
+            }}
+          >
+            Personal Details
+          </a>
 
-        <div className="govuk-grid-row">
-          <div className="govuk-grid-column-one-third">
-            <h2 className="lbh-heading-h2">
-              {personalDetails.full_name}
-            </h2>
-            <dl className="govuk-summary-list lbh-summary-list">
-              <div className="govuk-summary-list__row">
-                <dt className="govuk-summary-list__key govuk-!-width-one-half">
-                  <h5 className="lbh-heading-h5">Date of birth</h5>
-                </dt>
-                <dd className="govuk-summary-list__value">
-                    <p className="lbh-body-s">
-                        {formatDateString(personalDetails.date_of_birth, false)}
-                    </p>
-                </dd>
-              </div>
-            </dl>
+          <a
+            className="govuk-tabs__tab"
+            href="#notes"
+            onClick={(e) => {
+              setShowPersonalDetails(false);
+              setShowNotes(true);
+            }}
+          >
+            Notes
+          </a>
+        </div>
+
+        <div hidden={!showPersonalDetails}>
+          <div>
+            <PersonSummary PersonalDetails={personalDetails} />
 
             <ContactInfo PersonalDetails={personalDetails} />
 
             <Addresses PersonalDetails={personalDetails} />
           </div>
+        </div>
 
-          <div className="govuk-grid-column-two-thirds">
-            <Notes Notes={notes} PhoneNumber={phoneNumber} />
+        <div hidden={!showNotes}>
+          <div className="govuk-grid-column-one-half">
             <CallHistory VonageEvents={VonageEvents} />
           </div>
+          <div className="govuk-grid-column-one-half">
+            <Notes Notes={notes} PhoneNumber={phoneNumber} />
+          </div>
         </div>
+
         <div className="scratchpad">
           <ScratchPad />
         </div>
@@ -72,7 +89,8 @@ export const SearchView = (): JSX.Element => {
       <>
         <h1 className="lbh-heading-h1">Welcome to Single View</h1>
         <h3 className="lbh-heading-h3">Search by phone number</h3>
-        <form onSubmit={(e) => {
+        <form
+          onSubmit={(e) => {
             e.preventDefault();
             loadRecord(phoneNumber);
           }}

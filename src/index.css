@@ -20,3 +20,10 @@ code {
   padding-right: 1em;
   z-index: 1;
 }
+
+.navBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
