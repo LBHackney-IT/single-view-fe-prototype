@@ -71,10 +71,10 @@ export const SearchView = (): JSX.Element => {
         </div>
 
         <div hidden={!showNotes}>
-          <div className="govuk-grid-column-one-half">
+          <div className="govuk-grid-column-one-third">
             <CallHistory VonageEvents={VonageEvents} />
           </div>
-          <div className="govuk-grid-column-one-half">
+          <div className="govuk-grid-column-two-thirds">
             <Notes Notes={notes} PhoneNumber={phoneNumber} />
           </div>
         </div>
