@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Caller } from "../interfaces/componentInterfaces";
+import { PersonalDetails } from "../interfaces/viewInterfaces";
 
 type Props = {
     loadRecord: (phoneNumber: string) => void
@@ -17,11 +18,15 @@ export const CallerList = (props: Props): JSX.Element => {
         for (let i = 0; i < numCalls; i++) {
             let phoneNumber = localStorage.key(
                 Math.round(Math.random() * maxLookupKey)
-            );
+            ) || "";
+            let data = JSON.parse(localStorage.getItem(phoneNumber) || "{}");
 
             if (phoneNumber) {
                 callers.push({
-                  phoneNumber: phoneNumber
+                  phoneNumber: phoneNumber,
+                  fullName: data.PersonalDetails.full_name,
+                  address1: data.PersonalDetails.Addresses[0].address_line_1,
+                  postcode: data.PersonalDetails.Addresses[0].postal_code,
                 });
             }
           }
@@ -53,6 +58,16 @@ export const CallerList = (props: Props): JSX.Element => {
               <td className="govuk-table__cell">
               <p className="lbh-body-s">
                 {caller.phoneNumber}
+                </p>
+            </td>
+            <td className="govuk-table__cell">
+              <p className="lbh-body-s">
+                {caller.fullName}
+                </p>
+            </td>
+            <td className="govuk-table__cell">
+              <p className="lbh-body-s">
+                {caller.address1}, {caller.postcode}
                 </p>
             </td>
               <td className="govuk-table__cell govuk-table__cell--numeric">
