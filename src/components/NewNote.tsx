@@ -19,7 +19,7 @@ export const NewNote = (props: Props): JSX.Element => {
     }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
     targetType: category,
     author: {
-      fullname: "Test User",
+      fullname: JSON.parse(sessionStorage.getItem("auth") || "").name,
     },
   };
 
