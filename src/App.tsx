@@ -10,6 +10,10 @@ function App() {
 
     // Load mock data
     useEffect(() => {
+        if (localStorage.length > 0) {
+            return;
+        }
+
         fetch("data/call-notes-person-aggregation-small.json")
           .then((res) => res.json())
           .then((data) => {
