@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import { authUser, isLoggedIn, logout } from "./Auth";
+import { authUser, isLoggedIn, logout } from "./auth";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { SearchView } from "./views/search";
 import { LoginView } from "./views/login";
@@ -94,19 +94,19 @@ function App() {
         </div>
       </div>
       <div className="lbh-container">
-      <Router>
-          <Switch>
-            <Route path="/login">
-                <LoginView />
-            </Route>
-            <PrivateRoute exact path="/">
-                <Redirect to="/search" />
-            </PrivateRoute>
-            <PrivateRoute exact path="/search">
-                <SearchView />
-            </PrivateRoute>
-        </Switch>
-    </Router>
+        <Router>
+            <Switch>
+                <Route path="/login">
+                    <LoginView />
+                </Route>
+                <PrivateRoute exact path="/">
+                    <Redirect to="/search" />
+                </PrivateRoute>
+                <PrivateRoute exact path="/search">
+                    <SearchView />
+                </PrivateRoute>
+            </Switch>
+        </Router>
       </div>
       <footer>{/*  */}</footer>
     </div>
