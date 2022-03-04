@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Note } from "../interfaces/viewInterfaces";
+import { authUser } from "../auth";
 
 type Props = {
   onSubmit: (note: Note) => void;
@@ -19,7 +20,7 @@ export const NewNote = (props: Props): JSX.Element => {
     }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
     targetType: category,
     author: {
-      fullname: "Test User",
+      fullname: authUser.name,
     },
   };
 
