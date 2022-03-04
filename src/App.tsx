@@ -72,7 +72,7 @@ function App() {
                 <div className="lbh-header__links">
                     <p>{authUser.name}</p>
                     <a
-                        href=""
+                        href="/"
                         onClick={(e) => {
                             e.preventDefault();
                             logout();

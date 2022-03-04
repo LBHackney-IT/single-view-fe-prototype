@@ -33,7 +33,7 @@ export const login = (fullName: string): boolean => {
 
 export const logout = (): void => {
     sessionStorage.removeItem("auth");
-    window.location.reload();
+    window.location.href = "/";
 };
 
 export const isLoggedIn = (): boolean => {
