@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { login } from "../components/Auth";
+import { login } from "../Auth";
 
 export const LoginView = (): JSX.Element => {
     const [fullName, setFullName] = useState("");

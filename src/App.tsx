@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { authUser, isLoggedIn, logout } from "./Auth";
+import { PrivateRoute } from "./components/PrivateRoute";
 import { SearchView } from "./views/search";
 import { LoginView } from "./views/login";
-import { PrivateRoute } from "./components/PrivateRoute";
 import "./App.scss";
 
 function App() {
@@ -13,9 +14,6 @@ function App() {
           .then((res) => res.json())
           .then((data) => {
             for (let item in data) {
-                
-
-
                 localStorage.setItem(item, JSON.stringify(data[item]));
             }
         })
@@ -66,6 +64,20 @@ function App() {
                 </span>
               </a>
             </div>
+            {isLoggedIn() && (
+                <div className="lbh-header__links">
+                    <p>{authUser.name}</p>
+                    <a
+                        href=""
+                        onClick={(e) => {
+                            e.preventDefault();
+                            logout();
+                        }}
+                    >
+                        Sign out
+                    </a>
+                </div>
+            )}
           </div>
         </div>
       </header>
