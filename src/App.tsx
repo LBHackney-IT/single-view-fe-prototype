@@ -8,6 +8,15 @@ import "./App.scss";
 
 function App() {
 
+    useEffect(() => {
+        document.body.classList.add("govuk-template__body");
+        document.body.classList.add("js-enabled");
+
+        if (typeof window !== "undefined") {
+            require("lbh-frontend").initAll();
+        }
+    }, []);
+
     // Load mock data
     useEffect(() => {
         if (localStorage.length > 0) {
