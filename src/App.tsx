@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { authUser, isLoggedIn, logout } from "./auth";
 import { PrivateRoute } from "./components/PrivateRoute";
+import { ScratchPad } from "./components/ScratchPad";
 import { SearchView } from "./views/search";
 import { LoginView } from "./views/login";
 import "./App.scss";
@@ -120,6 +121,12 @@ function App() {
                 </PrivateRoute>
             </Switch>
         </Router>
+
+        {isLoggedIn() && (
+            <div className="scratchpad">
+                <ScratchPad />
+            </div>
+        )}
       </div>
       <footer>{/*  */}</footer>
     </div>

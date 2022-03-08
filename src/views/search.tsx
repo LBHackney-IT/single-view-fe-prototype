@@ -5,7 +5,6 @@ import { CallHistory } from "../components/CallHistory";
 import { PersonSummary } from "../components/PersonSummary";
 import { Addresses } from "../components/Addresses";
 import { ContactInfo } from "../components/ContactInfo";
-import { ScratchPad } from "../components/ScratchPad";
 import {
   PersonalDetails,
   Note,
@@ -77,10 +76,6 @@ export const SearchView = (): JSX.Element => {
           <div className="govuk-grid-column-two-thirds">
             <Notes Notes={notes} PhoneNumber={phoneNumber} />
           </div>
-        </div>
-
-        <div className="scratchpad">
-          <ScratchPad />
         </div>
       </>
     );
