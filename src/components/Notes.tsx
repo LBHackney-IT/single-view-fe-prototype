@@ -13,7 +13,6 @@ export const Notes = (props: Props): JSX.Element => {
 
   return (
     <div className="lbh-container">
-      <h2 className="lbh-heading-h2">Notes</h2>
         <ol className="lbh-timeline">
             <li className="lbh-timeline__event">
                 <NewNote onSubmit={onNoteSubmit} onCancel={onNoteCancel} />
@@ -53,9 +52,9 @@ export const Notes = (props: Props): JSX.Element => {
     setShowNoteComponent(!showNoteComponent);
     props.Notes.unshift(newNote);
 
-    let data = JSON.parse(localStorage.getItem(props.PhoneNumber) || "{}");
-    data.notes = props.Notes;
-    localStorage.setItem(props.PhoneNumber, JSON.stringify(data));
+    let personData = JSON.parse(localStorage.getItem("personData") || "{}");
+    personData[props.PhoneNumber].notes = props.Notes;
+    localStorage.setItem("personData", JSON.stringify(personData));
   }
 
   function onNoteCancel() {

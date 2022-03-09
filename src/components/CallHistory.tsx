@@ -6,8 +6,7 @@ type Props = {
 
 export const CallHistory = (props: Props): JSX.Element => {
   return (
-    <div className="lbh-container sv-space-t">
-      <h2 className="lbh-heading-h2">Call History</h2>
+    <div className="lbh-container">
       <ol className="lbh-timeline">
         {props.VonageEvents.map((vonageEvent: VonageEvent, index: number) => {
             return (

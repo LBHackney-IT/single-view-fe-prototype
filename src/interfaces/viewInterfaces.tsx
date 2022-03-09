@@ -1,4 +1,5 @@
 export interface PersonalDetails {
+  personID: string;
   full_name: string;
   date_of_birth: string;
   title_refcode: string;

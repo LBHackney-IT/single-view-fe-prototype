@@ -27,9 +27,6 @@ export const NewNote = (props: Props): JSX.Element => {
   return (
     <>
       <div className="govuk-form-group lbh-form-group">
-        {/* <label className="govuk-label lbh-label" htmlFor="more-detail">
-          Enter your note below.
-        </label> */}
         <textarea
           className="govuk-textarea lbh-textarea"
           id="more-detail"
@@ -74,14 +71,6 @@ export const NewNote = (props: Props): JSX.Element => {
       >
         Add note
       </button>
-      {/* <button
-        className="govuk-button govuk-secondary lbh-button lbh-button--secondary"
-        data-module="govuk-button"
-        onClick={props.onCancel}
-        style={{ marginLeft: "1rem" }}
-      >
-        Cancel
-      </button> */}
     </>
   );
 

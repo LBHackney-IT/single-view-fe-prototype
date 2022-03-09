@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { authUser, isLoggedIn, logout } from "./auth";
 import { PrivateRoute } from "./components/PrivateRoute";
@@ -6,8 +6,41 @@ import { ScratchPad } from "./components/ScratchPad";
 import { SearchView } from "./views/search";
 import { LoginView } from "./views/login";
 import "./App.scss";
+import { RecordView } from "./views/record";
 
 function App() {
+    const loadData = (): void => {
+        if (localStorage.getItem("personData")) {
+            return;
+        }
+
+        fetch("data/call-notes-person-aggregation-small.json")
+          .then((res) => res.json())
+          .then((res) => {
+
+            let personData: any = {};
+            let keyByPhone: any = {};
+
+            for (let item in res) {
+                let data = res[item];
+                let key = data.PersonalDetails.personID;
+
+                personData[key] = data;
+                keyByPhone[data.PersonalDetails.contacts[0].value] = key;
+            }
+
+            localStorage.setItem("personData", JSON.stringify(personData));
+            localStorage.setItem("keyByPhone", JSON.stringify(keyByPhone));
+        })
+        .then(() => {
+            console.log("Data loaded");
+        })
+        .catch(() => {
+            console.error("Failed to load data")
+        });
+    }
+
+    useState(loadData);
 
     useEffect(() => {
         document.body.classList.add("govuk-template__body");
@@ -18,28 +51,7 @@ function App() {
         }
     }, []);
 
-    // Load mock data
-    useEffect(() => {
-        if (localStorage.length > 0) {
-            return;
-        }
-
-        fetch("data/call-notes-person-aggregation-small.json")
-          .then((res) => res.json())
-          .then((data) => {
-            for (let item in data) {
-                localStorage.setItem(item, JSON.stringify(data[item]));
-            }
-        })
-        .then(() => {
-            console.log("Data loaded");
-        })
-        .catch(() => {
-            console.error("Failed to load call data")
-        });
-    }, []);
-
-  return (
+    return (
     <div className="App">
       <header className="lbh-header">
         <div className="lbh-header__main">
@@ -119,6 +131,14 @@ function App() {
                 <PrivateRoute exact path="/search">
                     <SearchView />
                 </PrivateRoute>
+                <PrivateRoute exact path="/records/:recordId">
+                    <RecordView />
+                </PrivateRoute>
+                <Route>
+                    <p className="lbh-body-s">
+                        404 - Page Not Found
+                    </p>
+                </Route>
             </Switch>
         </Router>
 

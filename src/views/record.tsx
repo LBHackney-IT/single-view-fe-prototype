@@ -1,0 +1,66 @@
+import { Redirect, useParams } from "react-router-dom";
+import {
+    PersonalDetails,
+    Note,
+    VonageEvent,
+} from "../interfaces/viewInterfaces";
+import { Notes } from "../components/Notes";
+import { CallHistory } from "../components/CallHistory";
+import { PersonSummary } from "../components/PersonSummary";
+import { Addresses } from "../components/Addresses";
+import { ContactInfo } from "../components/ContactInfo";
+
+type UrlParams = {
+    recordId: string
+}
+
+export const RecordView = () => {
+    const { recordId } = useParams<UrlParams>();
+    const record = JSON.parse(localStorage.getItem("personData") || "{}")[recordId];
+    const personalDetails: PersonalDetails = record.PersonalDetails;
+    const notes: Note[] = record.notes;
+    const VonageEvents: VonageEvent[] = record.vonage_events;
+
+    return (
+        personalDetails
+            ? (
+                <>
+                    <a href="/search" className="govuk-button lbh-button">
+                        Search Again
+                    </a>
+                    <div className="govuk-tabs lbh-tabs sv-space-t" data-module="govuk-tabs">
+                        <h2 className="govuk-tabs__title">Contents</h2>
+                        <ul className="govuk-tabs__list">
+                            <li className="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                                <a className="govuk-tabs__tab" href="#profile">
+                                    Profile
+                                </a>
+                            </li>
+                            <li className="govuk-tabs__list-item">
+                                <a className="govuk-tabs__tab" href="#notes">
+                                    Notes
+                                </a>
+                            </li>
+                            <li className="govuk-tabs__list-item">
+                                <a className="govuk-tabs__tab" href="#callHistory">
+                                    Call History
+                                </a>
+                            </li>
+                        </ul>
+                        <section className="govuk-tabs__panel" id="profile">
+                            <PersonSummary PersonalDetails={personalDetails} />
+                            <ContactInfo PersonalDetails={personalDetails} />
+                            <Addresses PersonalDetails={personalDetails} />
+                        </section>
+                        <section className="govuk-tabs__panel govuk-tabs__panel--hidden" id="notes">
+                            <Notes Notes={notes} PhoneNumber={recordId} />
+                        </section>
+                        <section className="govuk-tabs__panel govuk-tabs__panel--hidden" id="callHistory">
+                            <CallHistory VonageEvents={VonageEvents} />
+                        </section>
+                    </div>
+                </>
+            )
+            : <Redirect to="/404" />
+    );
+}

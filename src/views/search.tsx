@@ -1,85 +1,20 @@
 import React, { useState } from "react";
 import { CallerList } from "../components/CallerList";
-import { Notes } from "../components/Notes";
-import { CallHistory } from "../components/CallHistory";
-import { PersonSummary } from "../components/PersonSummary";
-import { Addresses } from "../components/Addresses";
-import { ContactInfo } from "../components/ContactInfo";
-import {
-  PersonalDetails,
-  Note,
-  VonageEvent,
-} from "../interfaces/viewInterfaces";
 
 export const SearchView = (): JSX.Element => {
-  const [submitted, setSubmitted] = useState(false);
-  const [showPersonalDetails, setShowPersonalDetails] = useState(true);
-  const [showNotes, setShowNotes] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [personalDetails, setPersonalDetails] = useState<PersonalDetails>();
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [VonageEvents, setVonageEvents] = useState<VonageEvent[]>([]);
-  const [showSearchError, setShowSearchError] = useState(false);
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [showSearchError, setShowSearchError] = useState(false);
 
-  if (submitted && personalDetails) {
-    return (
-      <>
-        <div className="navBar">
-          <button
-            className="govuk-button lbh-button"
-            data-module="govuk-button"
-            onClick={(e) => {
-              setSubmitted(false);
-              setShowSearchError(false);
-            }}
-          >
-            Search again
-          </button>
-          <div></div>
-          <a
-            className="govuk-tabs__tab"
-            href="#personaldetails"
-            onClick={(e) => {
-              setShowPersonalDetails(true);
-              setShowNotes(false);
-            }}
-          >
-            Personal Details
-          </a>
+    const search = (value: string): string | void => {
+        let personId = JSON.parse(localStorage.getItem("keyByPhone") || "{}")[value];
 
-          <a
-            className="govuk-tabs__tab"
-            href="#notes"
-            onClick={(e) => {
-              setShowPersonalDetails(false);
-              setShowNotes(true);
-            }}
-          >
-            Notes
-          </a>
-        </div>
+        console.log(personId)
+        if (! personId) {
+            return;
+        }
+        return personId;
+    }
 
-        <div hidden={!showPersonalDetails}>
-          <div>
-            <PersonSummary PersonalDetails={personalDetails} />
-
-            <ContactInfo PersonalDetails={personalDetails} />
-
-            <Addresses PersonalDetails={personalDetails} />
-          </div>
-        </div>
-
-        <div hidden={!showNotes}>
-          <div className="govuk-grid-column-one-third">
-            <CallHistory VonageEvents={VonageEvents} />
-          </div>
-          <div className="govuk-grid-column-two-thirds">
-            <Notes Notes={notes} PhoneNumber={phoneNumber} />
-          </div>
-        </div>
-      </>
-    );
-  } else {
     return (
       <>
         <h1 className="lbh-heading-h1">Welcome to Single View</h1>
@@ -87,7 +22,12 @@ export const SearchView = (): JSX.Element => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            loadRecord(phoneNumber);
+            let personId = search(phoneNumber);
+            if (! personId) {
+                setShowSearchError(true);
+                return;
+            }
+            window.location.href = "/records/" + personId;
           }}
         >
           <div className="govuk-form-group lbh-form-group">
@@ -118,25 +58,10 @@ export const SearchView = (): JSX.Element => {
         </form>
         <div className="lbh-container sv-space-t">
           <h3 className="lbh-heading-h3">Live Calls</h3>
-          <CallerList loadRecord={loadRecord} />
+          <CallerList />
         </div>
       </>
     );
-  }
-
-  function loadRecord(phoneNumber: string) {
-    let data = JSON.parse(localStorage.getItem(phoneNumber) || "{}");
-
-    if (!data.PersonalDetails) {
-      setShowSearchError(true);
-      return;
-    }
-
-    setSubmitted(true);
-    setPersonalDetails(data.PersonalDetails);
-    setNotes(data.notes || []);
-    setVonageEvents(data.vonage_events || []);
-  }
 
   function onSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
     setPhoneNumber(e.target.value);
