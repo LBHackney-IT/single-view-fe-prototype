@@ -1,33 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import { authUser, isLoggedIn, logout } from "./auth";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { authUser, isLoggedIn, logout } from "./Auth";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { SearchView } from "./views/search";
 import { LoginView } from "./views/login";
 import "./App.scss";
 
 function App() {
+  // Load mock data
+  useEffect(() => {
+    if (localStorage.length > 0) {
+      return;
+    }
 
-    // Load mock data
-    useEffect(() => {
-        if (localStorage.length > 0) {
-            return;
+    fetch("data/call-notes-person-aggregation-small.json")
+      .then((res) => res.json())
+      .then((data) => {
+        for (let item in data) {
+          localStorage.setItem(item, JSON.stringify(data[item]));
         }
-
-        fetch("data/call-notes-person-aggregation-small.json")
-          .then((res) => res.json())
-          .then((data) => {
-            for (let item in data) {
-                localStorage.setItem(item, JSON.stringify(data[item]));
-            }
-        })
-        .then(() => {
-            console.log("Data loaded");
-        })
-        .catch(() => {
-            console.error("Failed to load call data")
-        });
-    }, []);
+      })
+      .then(() => {
+        console.log("Data loaded");
+      })
+      .catch(() => {
+        console.error("Failed to load call data");
+      });
+  }, []);
 
   return (
     <div className="App">
@@ -69,18 +73,18 @@ function App() {
               </a>
             </div>
             {isLoggedIn() && (
-                <div className="lbh-header__links">
-                    <p>{authUser.name}</p>
-                    <a
-                        href="/"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            logout();
-                        }}
-                    >
-                        Sign out
-                    </a>
-                </div>
+              <div className="lbh-header__links">
+                <p>{authUser.name}</p>
+                <a
+                  href="/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    logout();
+                  }}
+                >
+                  Sign out
+                </a>
+              </div>
             )}
           </div>
         </div>
@@ -99,17 +103,17 @@ function App() {
       </div>
       <div className="lbh-container">
         <Router>
-            <Switch>
-                <Route path="/login">
-                    <LoginView />
-                </Route>
-                <PrivateRoute exact path="/">
-                    <Redirect to="/search" />
-                </PrivateRoute>
-                <PrivateRoute exact path="/search">
-                    <SearchView />
-                </PrivateRoute>
-            </Switch>
+          <Switch>
+            <Route path="/login">
+              <LoginView />
+            </Route>
+            <PrivateRoute exact path="/">
+              <Redirect to="/search" />
+            </PrivateRoute>
+            <PrivateRoute exact path="/search">
+              <SearchView />
+            </PrivateRoute>
+          </Switch>
         </Router>
       </div>
       <footer>{/*  */}</footer>
