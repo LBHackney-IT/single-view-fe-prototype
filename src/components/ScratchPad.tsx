@@ -35,7 +35,7 @@ export const ScratchPad = (): JSX.Element => {
           className="lbh-heading-h3 lbh-collapsible__heading"
           style={{ marginRight: "5px" }}
         >
-          Scratchpad
+          Digipad
         </h2>
         <svg width="17" height="10" viewBox="0 0 17 10">
           <path d="M2 1.5L8.5 7.5L15 1.5" strokeWidth="3" />
