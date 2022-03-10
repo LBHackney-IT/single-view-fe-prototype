@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
 import { Caller } from "../interfaces/componentInterfaces";
 import { PersonalDetails } from "../interfaces/viewInterfaces";
 
@@ -35,7 +34,6 @@ export const CallerList = () => {
     }
 
     const [callerList, setCallerList] = useState<Caller[]>(getCallers);
-    const [recordId, setRecordId] = useState<string | null>(null);
 
     useEffect(() => {
         intervalId = setInterval(
@@ -48,9 +46,7 @@ export const CallerList = () => {
         }
     });
 
-    return recordId ?
-        <Redirect to={"/records/" + recordId} />
-    : (
+    return (
         <table className="govuk-table lbh-table">
         <tbody className="govuk-table__body">
             {callerList.map((caller: Caller, index) => {
@@ -74,12 +70,8 @@ export const CallerList = () => {
                 </td>
                 <td className="govuk-table__cell govuk-table__cell--numeric">
                     <a
-                        href=""
+                        href={"/records/" + caller.id}
                         className="lbh-body-s"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setRecordId(caller.id);
-                        }}
                     >
                         Take
                     </a>
