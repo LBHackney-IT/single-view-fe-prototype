@@ -5,10 +5,7 @@ import {
     VonageEvent,
 } from "../interfaces/viewInterfaces";
 import { Notes } from "../components/Notes";
-import { CallHistory } from "../components/CallHistory";
 import { PersonSummary } from "../components/PersonSummary";
-import { Addresses } from "../components/Addresses";
-import { ContactInfo } from "../components/ContactInfo";
 
 type UrlParams = {
     recordId: string
@@ -28,7 +25,7 @@ export const RecordView = () => {
 
     const personalDetails: PersonalDetails = record.PersonalDetails;
     const notes: Note[] = record.notes;
-    const VonageEvents: VonageEvent[] = record.vonage_events;
+    // const VonageEvents: VonageEvent[] = record.vonage_events;
 
     return (
         <>
@@ -66,8 +63,6 @@ export const RecordView = () => {
                 </ul>
                 <section className="govuk-tabs__panel" id="profile">
                     <PersonSummary PersonalDetails={personalDetails} />
-                    <ContactInfo PersonalDetails={personalDetails} />
-                    <Addresses PersonalDetails={personalDetails} />
                 </section>
                 <section className="govuk-tabs__panel govuk-tabs__panel--hidden" id="notes">
                     <Notes Notes={notes} PhoneNumber={recordId} />
