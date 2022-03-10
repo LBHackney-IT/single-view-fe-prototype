@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Note } from "../interfaces/viewInterfaces";
-import { authUser } from "../Auth";
+import { authUser } from "../auth";
 
 type Props = {
   onSubmit: (note: Note) => void;

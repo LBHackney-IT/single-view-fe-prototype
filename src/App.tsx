@@ -5,7 +5,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { authUser, isLoggedIn, logout } from "./Auth";
+import { authUser, isLoggedIn, logout } from "./auth";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { ScratchPad } from "./components/ScratchPad";
 import { SearchView } from "./views/search";
