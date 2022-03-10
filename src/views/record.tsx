@@ -49,10 +49,20 @@ export const RecordView = () => {
                         </a>
                     </li>
                     <li className="govuk-tabs__list-item">
+                        <a className="govuk-tabs__tab" href="#paymentHistory">
+                            Payment History
+                        </a>
+                    </li>
+                    <li className="govuk-tabs__list-item">
+                        <a className="govuk-tabs__tab" href="#documents">
+                            Documents
+                        </a>
+                    </li>
+                    {/* <li className="govuk-tabs__list-item">
                         <a className="govuk-tabs__tab" href="#callHistory">
                             Call History
                         </a>
-                    </li>
+                    </li> */}
                 </ul>
                 <section className="govuk-tabs__panel" id="profile">
                     <PersonSummary PersonalDetails={personalDetails} />
@@ -62,9 +72,15 @@ export const RecordView = () => {
                 <section className="govuk-tabs__panel govuk-tabs__panel--hidden" id="notes">
                     <Notes Notes={notes} PhoneNumber={recordId} />
                 </section>
-                <section className="govuk-tabs__panel govuk-tabs__panel--hidden" id="callHistory">
-                    <CallHistory VonageEvents={VonageEvents} />
+                <section className="govuk-tabs__panel govuk-tabs__panel--hidden" id="paymentHistory">
+                    <h3 className="lbh-heading-h3">Payment History</h3>
                 </section>
+                <section className="govuk-tabs__panel govuk-tabs__panel--hidden" id="documents">
+                    <h3 className="lbh-heading-h3">Documents</h3>
+                </section>
+                {/* <section className="govuk-tabs__panel govuk-tabs__panel--hidden" id="callHistory">
+                    <CallHistory VonageEvents={VonageEvents} />
+                </section> */}
             </div>
         </>
     );
