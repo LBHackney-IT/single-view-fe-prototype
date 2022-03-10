@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { Caller } from "../interfaces/componentInterfaces";
 import { PersonalDetails } from "../interfaces/viewInterfaces";
 
@@ -34,6 +35,7 @@ export const CallerList = () => {
     }
 
     const [callerList, setCallerList] = useState<Caller[]>(getCallers);
+    const [recordId, setRecordId] = useState<string | null>(null);
 
     useEffect(() => {
         intervalId = setInterval(
@@ -46,40 +48,46 @@ export const CallerList = () => {
         }
     });
 
-  return (
-    <table className="govuk-table lbh-table">
-      <tbody className="govuk-table__body">
-        {callerList.map((caller: Caller, index) => {
-          return (
+    return recordId ?
+        <Redirect to={"/records/" + recordId} />
+    : (
+        <table className="govuk-table lbh-table">
+        <tbody className="govuk-table__body">
+            {callerList.map((caller: Caller, index) => {
+            return (
 
-            <tr className="govuk-table__row" key={index}>
-              <td className="govuk-table__cell">
-              <p className="lbh-body-s">
-                {caller.phoneNumber}
-                </p>
-            </td>
-            <td className="govuk-table__cell">
-              <p className="lbh-body-s">
-                {caller.fullName}
-                </p>
-            </td>
-            <td className="govuk-table__cell">
-              <p className="lbh-body-s">
-                {caller.address1}, {caller.postcode}
-                </p>
-            </td>
-              <td className="govuk-table__cell govuk-table__cell--numeric">
-                <a
-                    href={"/records/" + caller.id}
-                    className="lbh-body-s"
-                >
-                    Take
-                </a>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
+                <tr className="govuk-table__row" key={index}>
+                <td className="govuk-table__cell">
+                <p className="lbh-body-s">
+                    {caller.phoneNumber}
+                    </p>
+                </td>
+                <td className="govuk-table__cell">
+                <p className="lbh-body-s">
+                    {caller.fullName}
+                    </p>
+                </td>
+                <td className="govuk-table__cell">
+                <p className="lbh-body-s">
+                    {caller.address1}, {caller.postcode}
+                    </p>
+                </td>
+                <td className="govuk-table__cell govuk-table__cell--numeric">
+                    <a
+                        href=""
+                        className="lbh-body-s"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setRecordId(caller.id);
+                        }}
+                    >
+                        Take
+                    </a>
+                </td>
+                </tr>
+            );
+            })}
+        </tbody>
+        </table>
+    );
 };

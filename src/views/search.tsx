@@ -6,9 +6,9 @@ export const SearchView = (): JSX.Element => {
     const [showSearchError, setShowSearchError] = useState(false);
 
     const search = (value: string): string | void => {
-        let personId = JSON.parse(localStorage.getItem("keyByPhone") || "{}")[value];
-
-        console.log(personId)
+        let personId = JSON.parse(
+            localStorage.getItem("keyByPhone") || "{}"
+        )[value];
         if (! personId) {
             return;
         }
