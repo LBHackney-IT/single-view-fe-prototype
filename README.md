@@ -1,4 +1,4 @@
-# single-view-fe-prototype
+# Single view front end prototype
 
 This is a front-end prototype for Single View using React with TypeScript.
 It uses the `lbh-frontend` package for the purpose of rapid prototyping of new
@@ -6,6 +6,7 @@ ideas and workflows for Single View.
 
 ## Running it locally
 
+Runs on node 16.
 - Install all dependencies by running `yarn`.
 - Run the application with `yarn start`.
 - Load `http://localhost:3000` in your browser.
