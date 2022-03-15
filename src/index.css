@@ -48,7 +48,6 @@ input:focus {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
-  border: 1px solid #dedede;
 }
 .govuk-textarea__highlighter {
   padding: 10px;
@@ -65,6 +64,10 @@ input:focus {
   padding: 5px 15px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
-.govuk-textarea__suggestions__item — focused {
+.govuk-textarea__suggestions__item:focus {
   background-color: #daf4fa;
+}
+
+.selected-mention {
+  font-weight: 900;
 }

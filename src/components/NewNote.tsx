@@ -8,18 +8,22 @@ type Props = {
   onCancel: () => void;
 };
 
-let mockTaggableUsers = [
+const mockTaggableUsers = [
   {
     id: 1,
-    display: "Test User",
+    display: "Alan Smith",
   },
   {
     id: 2,
-    display: "Charli W",
+    display: "Jane Doe",
   },
   {
     id: 3,
-    display: "Another Test User",
+    display: "Alec Baldwin",
+  },
+  {
+    id: 4,
+    display: "Benedict Cumberbatch",
   },
 ];
 
@@ -51,10 +55,17 @@ export const NewNote = (props: Props): JSX.Element => {
           onChange={(event) => setNoteContent(event.target.value)}
           allowSpaceInQuery={true}
           aria-describedby="more-detail-hint"
-          placeholder="New note..."
+          placeholder="Compose a new note here. You can tag other users by using '@'"
           value={noteContent}
         >
-          <Mention trigger="@" data={mockTaggableUsers} />
+          <Mention
+            trigger="@"
+            data={mockTaggableUsers}
+            displayTransform={displayTransform}
+            className="selected-mention"
+            markup="@__display__"
+            regex={/(?:^|\s)@(\w+)(?:$|\s)/}
+          />
         </MentionsInput>
         <div
           className="govuk-form-group lbh-form-group"
@@ -106,5 +117,9 @@ export const NewNote = (props: Props): JSX.Element => {
     } else {
       setHasError(true);
     }
+  }
+
+  function displayTransform(id: string, display: string): string {
+    return "@" + display;
   }
 };
