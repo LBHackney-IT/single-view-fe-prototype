@@ -13,6 +13,10 @@ code {
     monospace;
 }
 
+input:focus {
+  outline: none;
+}
+
 .scratchpad {
   position: fixed;
   bottom: 0;
@@ -26,4 +30,41 @@ code {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.govuk-textarea:focus {
+  outline: none;
+}
+
+.govuk-textarea__control {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.govuk-textarea__input {
+  background-color: #fff;
+  border-radius: 3px;
+  transition: 0.3s ease-in-out;
+  padding: 9px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  border: 1px solid #dedede;
+}
+.govuk-textarea__highlighter {
+  padding: 10px;
+}
+.govuk-textarea__suggestions__list {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  max-height: 200px;
+  padding: 5px;
+  overflow: auto;
+}
+.govuk-textarea_suggestions__item {
+  padding: 5px 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.govuk-textarea__suggestions__item — focused {
+  background-color: #daf4fa;
 }

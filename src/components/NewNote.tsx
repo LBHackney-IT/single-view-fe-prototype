@@ -1,11 +1,27 @@
 import React, { useState } from "react";
 import { Note } from "../interfaces/viewInterfaces";
+import { MentionsInput, Mention } from "react-mentions";
 import { authUser } from "../auth";
 
 type Props = {
   onSubmit: (note: Note) => void;
   onCancel: () => void;
 };
+
+let mockTaggableUsers = [
+  {
+    id: 1,
+    display: "Test User",
+  },
+  {
+    id: 2,
+    display: "Charli W",
+  },
+  {
+    id: 3,
+    display: "Another Test User",
+  },
+];
 
 export const NewNote = (props: Props): JSX.Element => {
   const [noteContent, setNoteContent] = useState("");
@@ -27,16 +43,19 @@ export const NewNote = (props: Props): JSX.Element => {
   return (
     <>
       <div className="govuk-form-group lbh-form-group">
-        <textarea
+        <MentionsInput
           className="govuk-textarea lbh-textarea"
           id="more-detail"
           name="more-detail"
-          rows={5}
-          onChange={onTextChange}
+          style={{ height: "150px" }}
+          onChange={(event) => setNoteContent(event.target.value)}
+          allowSpaceInQuery={true}
           aria-describedby="more-detail-hint"
           placeholder="New note..."
           value={noteContent}
-        ></textarea>
+        >
+          <Mention trigger="@" data={mockTaggableUsers} />
+        </MentionsInput>
         <div
           className="govuk-form-group lbh-form-group"
           style={{ width: "50%" }}
@@ -73,11 +92,6 @@ export const NewNote = (props: Props): JSX.Element => {
       </button>
     </>
   );
-
-  function onTextChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    setNoteContent(e.target.value);
-    setHasError(false);
-  }
 
   function onCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
     setCategory(e.target.value);
