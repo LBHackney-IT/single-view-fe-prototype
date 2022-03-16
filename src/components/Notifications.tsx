@@ -23,7 +23,7 @@ export const NotificationsComponent = (): JSX.Element => {
           cardOption={false}
           header={{
             title: "Notifications",
-            option: { text: "Mark as read", onClick: onNotificationClick },
+            option: { text: "Mark all as read", onClick: onNotificationClick },
           }}
         />
       </p>
