@@ -4,10 +4,17 @@ import Notifications from "react-notifications-menu";
 import { NotificationData } from "../interfaces/viewInterfaces";
 
 export const NotificationsComponent = (): JSX.Element => {
+  const [notificationCount, setNotificationCount] = useState(1);
   const onNotificationClick = () => {
     mockNotificationData.shift();
     console.log(mockNotificationData);
     localStorage.setItem("notifications", JSON.stringify(mockNotificationData));
+  };
+
+  let showNotificationpopup = false;
+
+  const toggleNotificationPopup = () => {
+    showNotificationpopup = !showNotificationpopup;
   };
 
   let mockNotificationData: NotificationData[] = JSON.parse(
@@ -15,18 +22,16 @@ export const NotificationsComponent = (): JSX.Element => {
   );
 
   return (
-    <div className="notificationsDiv">
-      <p>
-        <Notifications
-          data={mockNotificationData}
-          icon={bell}
-          cardOption={false}
-          header={{
-            title: "Notifications",
-            option: { text: "Mark all as read", onClick: onNotificationClick },
-          }}
-        />
-      </p>
-    </div>
+    <>
+      <p style={{ marginBottom: "10px" }}>Notifications</p>
+      <div className="notificationsDiv notification">
+        <img
+          className="notification-bell"
+          src={bell}
+          onClick={toggleNotificationPopup}
+        ></img>
+        <p className="notification-count badge">{notificationCount}</p>
+      </div>
+    </>
   );
 };
