@@ -3,8 +3,10 @@ import { Note } from "../interfaces/viewInterfaces";
 import { authUser } from "../auth";
 
 type Props = {
-  onSubmit: (note: Note) => void;
+  onSubmit: (note: Note, id?: number) => void;
   onCancel: () => void;
+  notePlaceholder?: string;
+  id?: number;
 };
 
 export const NewNote = (props: Props): JSX.Element => {
@@ -34,7 +36,7 @@ export const NewNote = (props: Props): JSX.Element => {
           rows={5}
           onChange={onTextChange}
           aria-describedby="more-detail-hint"
-          placeholder="New note..."
+          placeholder={props.notePlaceholder || "New note..."}
           value={noteContent}
         ></textarea>
         <div
@@ -64,13 +66,19 @@ export const NewNote = (props: Props): JSX.Element => {
           text to your note
         </span>
       )}
-      <button
-        className="govuk-button lbh-button"
-        data-module="govuk-button"
-        onClick={onNoteSubmit}
-      >
-        Add note
-      </button>
+      <div style={{ display: "flex", justifyContent: "end" }}>
+        <button
+            id="saveNote"
+            className="govuk-button lbh-button lbh-button--secondary"
+            data-module="govuk-button"
+            onClick={onNoteSubmit}
+            style={{ marginTop: 0 }}
+            aria-disabled={! noteContent}
+            disabled={! noteContent}
+        >
+            Save
+        </button>
+      </div>
     </>
   );
 
@@ -86,7 +94,7 @@ export const NewNote = (props: Props): JSX.Element => {
   function onNoteSubmit(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
     if (noteContent.length > 0 && category.length > 0) {
-      props.onSubmit(newNote);
+      props.onSubmit(newNote, props.id);
       setNoteContent("");
       setCategory("");
     } else {

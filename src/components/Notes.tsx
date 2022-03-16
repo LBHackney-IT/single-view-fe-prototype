@@ -1,45 +1,55 @@
-import React, { useState } from "react";
-import { Note } from "../interfaces/viewInterfaces";
+import { useState } from "react";
+import { Note as NoteInterface } from "../interfaces/viewInterfaces";
+import { Note } from "./Note";
 import { NewNote } from "../components/NewNote";
-import { formatDateString } from "../utils";
 
 type Props = {
-  Notes: Note[];
-  PhoneNumber: string;
+  Notes: NoteInterface[];
+  RecordId: string;
 };
 
 export const Notes = (props: Props): JSX.Element => {
   const [showNoteComponent, setShowNoteComponent] = useState(false);
+  const [notes, setNotes] = useState(props.Notes || []);
 
   return (
     <div className="lbh-container">
-        <ol className="lbh-timeline">
-            <li className="lbh-timeline__event">
+        <details className="govuk-details lbh-details" data-module="govuk-details">
+            <summary className="lbh-body-s govuk-details__summary">
+                <span className="govuk-details__summary-text">Create a new note</span>
+            </summary>
+            <div className="govuk-details__text">
                 <NewNote onSubmit={onNoteSubmit} onCancel={onNoteCancel} />
-            </li>
-
-            {props.Notes?.map((note: Note, index: number) => {
+            </div>
+        </details>
+        <ol className="lbh-timeline">
+            {notes.map((note: NoteInterface, index: number) => {
                 return (
                     <li className="lbh-timeline__event lbh-timeline__event--minor" key={index}>
-                        <div className="sv-timeline__card">
-                            <div className="sv-timeline__card_title">
-                                <h5 className="lbh-heading-h5">
-                                    {formatDateString(note.createdAt, true)}
-                                </h5>
-                                <h5 className="lbh-heading-h5">
-                                    {note.author.fullname}
-                                </h5>
-                            </div>
-                            <p className="lbh-body-s">
-                                <span className="govuk-tag lbh-tag lbh-tag--green">
-                                    {note.targetType.charAt(0).toUpperCase() +
-                                        note.targetType.slice(1)}
-                                </span>
-                            </p>
-                            <h5 className="lbh-heading-h5">
-                                {note.title}
-                            </h5>
-                            <p className="lbh-body-s">{note.description}</p>
+                        <Note note={note} />
+                        <div>
+                            <details className="govuk-details lbh-details" data-module="govuk-details">
+                                <summary className="lbh-body-s govuk-details__summary">
+                                    <span className="govuk-details__summary-text">Reply</span>
+                                </summary>
+                                <div className="govuk-details__text">
+                                    <NewNote
+                                        onSubmit={onReplySubmit}
+                                        onCancel={onNoteCancel}
+                                        notePlaceholder="Add relevant notes to this case"
+                                        id={index}
+                                    />
+                                </div>
+                                <ol className="lbh-timeline">
+                                    {note.notes?.map((reply: NoteInterface, index: number) => {
+                                        return (
+                                            <li className="lbh-timeline__event lbh-timeline__event--minor" key={index}>
+                                                <Note note={reply} />
+                                            </li>
+                                        );
+                                    })}
+                                </ol>
+                            </details>
                         </div>
                     </li>
                 );
@@ -48,12 +58,35 @@ export const Notes = (props: Props): JSX.Element => {
     </div>
   );
 
-  function onNoteSubmit(newNote: Note) {
-    setShowNoteComponent(!showNoteComponent);
-    props.Notes.unshift(newNote);
+  function onReplySubmit(newNote: NoteInterface, id?: number) {
+    if (id == undefined) {
+        return;
+    }
+
+    let tmpNotes = [ ...notes ];
+    let replies = tmpNotes[id].notes || [];
+    replies.unshift(newNote);
+
+    tmpNotes[id] = {
+        ...tmpNotes[id],
+        notes: replies
+    };
+
+    setNotes(tmpNotes);
 
     let personData = JSON.parse(localStorage.getItem("personData") || "{}");
-    personData[props.PhoneNumber].notes = props.Notes;
+    personData[props.RecordId].notes = tmpNotes;
+    localStorage.setItem("personData", JSON.stringify(personData));
+  }
+
+  function onNoteSubmit(newNote: NoteInterface, id?: number) {
+    let tmpNotes = [ ...notes ];
+    tmpNotes.unshift(newNote);
+
+    setNotes(tmpNotes);
+
+    let personData = JSON.parse(localStorage.getItem("personData") || "{}");
+    personData[props.RecordId].notes = notes;
     localStorage.setItem("personData", JSON.stringify(personData));
   }
 
