@@ -78,3 +78,7 @@ input:focus {
   margin: 5px 15px 0px 0px;
   align-items: center;
 }
+
+.sv-count {
+  color: #aa2a16;
+}

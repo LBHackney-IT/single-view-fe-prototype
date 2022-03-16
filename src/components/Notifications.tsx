@@ -16,11 +16,11 @@ export const NotificationsComponent = (): JSX.Element => {
 
   return (
     <div className="notificationsDiv">
+      <p style={{ paddingBottom: "5px" }}>Notifications</p>
       <p>
         <Notifications
           data={mockNotificationData}
           icon={bell}
-          cardOption={false}
           header={{
             title: "Notifications",
             option: { text: "Mark as read", onClick: onNotificationClick },
