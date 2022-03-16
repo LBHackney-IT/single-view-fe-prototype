@@ -8,6 +8,7 @@ import {
 import { authUser, isLoggedIn, logout } from "./auth";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { ScratchPad } from "./components/ScratchPad";
+import { Notifications } from "./components/Notifications";
 import { SearchView } from "./views/search";
 import { LoginView } from "./views/login";
 import "./App.scss";
@@ -96,6 +97,7 @@ function App() {
             </div>
             {isLoggedIn() && (
               <div className="lbh-header__links">
+                <Notifications />
                 <p>{authUser.name}</p>
                 <a
                   href="/"
