@@ -11,10 +11,13 @@ export const NotificationsComponent = (): JSX.Element => {
     localStorage.setItem("notifications", JSON.stringify(mockNotificationData));
   };
 
-  let showNotificationpopup = false;
+  let showNotificationPopup = false;
 
   const toggleNotificationPopup = () => {
-    showNotificationpopup = !showNotificationpopup;
+    console.log("toggling popup");
+    console.log(showNotificationPopup);
+    showNotificationPopup = !showNotificationPopup;
+    window.location.replace("/notifications");
   };
 
   let mockNotificationData: NotificationData[] = JSON.parse(
@@ -30,7 +33,9 @@ export const NotificationsComponent = (): JSX.Element => {
           src={bell}
           onClick={toggleNotificationPopup}
         ></img>
-        <p className="notification-count badge">{notificationCount}</p>
+        {notificationCount > 0 && (
+          <p className="notification-count badge">{notificationCount}</p>
+        )}
       </div>
     </>
   );
