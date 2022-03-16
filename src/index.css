@@ -71,3 +71,10 @@ input:focus {
 .selected-mention {
   font-weight: 900;
 }
+
+.notificationsDiv {
+  display: flex;
+  justify-content: flex-start unsafe;
+  margin: 5px 15px 0px 0px;
+  align-items: center;
+}
