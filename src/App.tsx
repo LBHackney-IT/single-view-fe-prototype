@@ -12,6 +12,7 @@ import { NotificationsComponent } from "./components/Notifications";
 import { SearchView } from "./views/search";
 import { LoginView } from "./views/login";
 import "./App.scss";
+import { NotificationData } from "./interfaces/viewInterfaces";
 import { RecordView } from "./views/record";
 
 function App() {
@@ -50,6 +51,18 @@ function App() {
   useEffect(() => {
     document.body.classList.add("govuk-template__body");
     document.body.classList.add("js-enabled");
+
+    let mockNotificationData: NotificationData[] = [
+      {
+        image:
+          "https://cdn.iconscout.com/icon/free/png-256/list-message-2367725-1976875.png",
+        message: "A new note requires your attention.",
+        detailPage: "/records/afa799a2-1c7e-48d6-bc8e-9fe652e56c16#notes",
+        receivedTime: "1h ago",
+      },
+    ];
+
+    localStorage.setItem("notifications", JSON.stringify(mockNotificationData));
 
     if (typeof window !== "undefined") {
       require("lbh-frontend").initAll();

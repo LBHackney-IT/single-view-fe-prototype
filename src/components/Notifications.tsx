@@ -1,37 +1,30 @@
 import { useState } from "react";
-import bell from "../assets/images/whitebellv2.png";
+import bell from "../assets/images/bell-3-128.png";
 import Notifications from "react-notifications-menu";
+import { NotificationData } from "../interfaces/viewInterfaces";
 
 export const NotificationsComponent = (): JSX.Element => {
-  const [notificationCount, setnotificationCount] = useState(1);
   const onNotificationClick = () => {
-    setnotificationCount(0);
+    mockNotificationData.shift();
+    console.log(mockNotificationData);
+    localStorage.setItem("notifications", JSON.stringify(mockNotificationData));
   };
 
-  type NotificationData = {
-    image: string;
-    message: string;
-    detailPage: string;
-    receivedTime: string;
-  };
-
-  const mockNotificationData: NotificationData[] = [
-    {
-      image:
-        "https://cdn.iconscout.com/icon/free/png-256/list-message-2367725-1976875.png",
-      message: "A new note requires your attention.",
-      detailPage: "/records/afa799a2-1c7e-48d6-bc8e-9fe652e56c16#notes",
-      receivedTime: "1h ago",
-    },
-  ];
+  let mockNotificationData: NotificationData[] = JSON.parse(
+    localStorage.getItem("notifications")
+  );
 
   return (
     <div className="notificationsDiv">
-      <p onClick={onNotificationClick}>
+      <p>
         <Notifications
           data={mockNotificationData}
-          markAsRead={onNotificationClick}
           icon={bell}
+          cardOption={false}
+          header={{
+            title: "Notifications",
+            option: { text: "Mark as read", onClick: onNotificationClick },
+          }}
         />
       </p>
     </div>
