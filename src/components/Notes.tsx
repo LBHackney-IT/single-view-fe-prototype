@@ -86,7 +86,7 @@ export const Notes = (props: Props): JSX.Element => {
     setNotes(tmpNotes);
 
     let personData = JSON.parse(localStorage.getItem("personData") || "{}");
-    personData[props.RecordId].notes = notes;
+    personData[props.RecordId].notes = tmpNotes;
     localStorage.setItem("personData", JSON.stringify(personData));
   }
 
