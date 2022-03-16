@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Note as NoteInterface } from "../interfaces/viewInterfaces";
 import { Note } from "./Note";
 import { NewNote } from "../components/NewNote";
+import { useQuery } from "../hooks";
 
 type Props = {
   Notes: NoteInterface[];
@@ -11,6 +12,8 @@ type Props = {
 export const Notes = (props: Props): JSX.Element => {
   const [showNoteComponent, setShowNoteComponent] = useState(false);
   const [notes, setNotes] = useState(props.Notes || []);
+  const queryParams = useQuery();
+  const withReplies: boolean = queryParams.get("withReplies") == "1";
 
   return (
     <div className="lbh-container">
@@ -27,30 +30,32 @@ export const Notes = (props: Props): JSX.Element => {
                 return (
                     <li className="lbh-timeline__event lbh-timeline__event--minor" key={index}>
                         <Note note={note} />
-                        <div>
-                            <details className="govuk-details lbh-details" data-module="govuk-details">
-                                <summary className="lbh-body-s govuk-details__summary">
-                                    <span className="govuk-details__summary-text">Reply</span>
-                                </summary>
-                                <div className="govuk-details__text">
-                                    <NewNote
-                                        onSubmit={onReplySubmit}
-                                        onCancel={onNoteCancel}
-                                        notePlaceholder="Add relevant notes to this case"
-                                        id={index}
-                                    />
-                                </div>
-                                <ol className="lbh-timeline">
-                                    {note.notes?.map((reply: NoteInterface, index: number) => {
-                                        return (
-                                            <li className="lbh-timeline__event lbh-timeline__event--minor" key={index}>
-                                                <Note note={reply} />
-                                            </li>
-                                        );
-                                    })}
-                                </ol>
-                            </details>
-                        </div>
+                        {withReplies && (
+                            <div>
+                                <details className="govuk-details lbh-details" data-module="govuk-details">
+                                    <summary className="lbh-body-s govuk-details__summary">
+                                        <span className="govuk-details__summary-text">Reply</span>
+                                    </summary>
+                                    <div className="govuk-details__text">
+                                        <NewNote
+                                            onSubmit={onReplySubmit}
+                                            onCancel={onNoteCancel}
+                                            notePlaceholder="Add relevant notes to this case"
+                                            id={index}
+                                        />
+                                    </div>
+                                    <ol className="lbh-timeline">
+                                        {note.notes?.map((reply: NoteInterface, index: number) => {
+                                            return (
+                                                <li className="lbh-timeline__event lbh-timeline__event--minor" key={index}>
+                                                    <Note note={reply} />
+                                                </li>
+                                            );
+                                        })}
+                                    </ol>
+                                </details>
+                            </div>
+                        )}
                     </li>
                 );
             })}
