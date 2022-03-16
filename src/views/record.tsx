@@ -65,7 +65,7 @@ export const RecordView = () => {
                     <PersonSummary PersonalDetails={personalDetails} />
                 </section>
                 <section className="govuk-tabs__panel govuk-tabs__panel--hidden" id="notes">
-                    <Notes Notes={notes} PhoneNumber={recordId} />
+                    <Notes Notes={notes} RecordId={recordId} />
                 </section>
                 <section className="govuk-tabs__panel govuk-tabs__panel--hidden" id="paymentHistory">
                     <h3 className="lbh-heading-h3">Payment History</h3>

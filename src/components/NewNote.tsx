@@ -4,8 +4,10 @@ import { MentionsInput, Mention } from "react-mentions";
 import { authUser } from "../auth";
 
 type Props = {
-  onSubmit: (note: Note) => void;
+  onSubmit: (note: Note, id?: number) => void;
   onCancel: () => void;
+  notePlaceholder?: string;
+  id?: number;
 };
 
 const mockTaggableUsers = [
@@ -55,7 +57,10 @@ export const NewNote = (props: Props): JSX.Element => {
           onChange={(event) => setNoteContent(event.target.value)}
           allowSpaceInQuery={true}
           aria-describedby="more-detail-hint"
-          placeholder="Compose a new note here. You can tag other users by using '@'"
+          placeholder={
+              props.notePlaceholder
+              || "Compose a new note here. You can tag other users by using '@'"
+         }
           value={noteContent}
         >
           <Mention
@@ -94,13 +99,19 @@ export const NewNote = (props: Props): JSX.Element => {
           text to your note
         </span>
       )}
-      <button
-        className="govuk-button lbh-button"
-        data-module="govuk-button"
-        onClick={onNoteSubmit}
-      >
-        Add note
-      </button>
+      <div style={{ display: "flex", justifyContent: "end" }}>
+        <button
+            id="saveNote"
+            className="govuk-button lbh-button lbh-button--secondary"
+            data-module="govuk-button"
+            onClick={onNoteSubmit}
+            style={{ marginTop: 0 }}
+            aria-disabled={! noteContent}
+            disabled={! noteContent}
+        >
+            Save
+        </button>
+      </div>
     </>
   );
 
@@ -111,7 +122,7 @@ export const NewNote = (props: Props): JSX.Element => {
   function onNoteSubmit(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
     if (noteContent.length > 0 && category.length > 0) {
-      props.onSubmit(newNote);
+      props.onSubmit(newNote, props.id);
       setNoteContent("");
       setCategory("");
     } else {

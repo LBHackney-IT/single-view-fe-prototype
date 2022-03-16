@@ -66,4 +66,5 @@ export interface Note {
   author: {
     fullname: string;
   };
+  notes?: Array<Note>;
 }
