@@ -68,3 +68,10 @@ export interface Note {
   };
   notes?: Array<Note>;
 }
+
+export interface NotificationData {
+  image: string;
+  message: string;
+  detailPage: string;
+  receivedTime: string;
+}
