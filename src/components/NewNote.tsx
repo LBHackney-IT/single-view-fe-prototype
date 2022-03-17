@@ -107,9 +107,9 @@ export const NewNote = (props: Props): JSX.Element => {
       <button
             className="govuk-button lbh-button lbh-button--secondary"
             style={{ marginTop: 0, marginRight: "0.618em" }}
-            onClick={() => setNoteContent("")}
-            aria-disabled={! noteContent}
-            disabled={! noteContent}
+            onClick={clearAll}
+            aria-disabled={! hasContent()}
+            disabled={! hasContent()}
         >
           Clear All
         </button>
@@ -119,14 +119,24 @@ export const NewNote = (props: Props): JSX.Element => {
             data-module="govuk-button"
             onClick={onNoteSubmit}
             style={{ marginTop: 0 }}
-            aria-disabled={! noteContent}
-            disabled={! noteContent}
+            aria-disabled={! hasContent()}
+            disabled={! hasContent()}
         >
             Save
         </button>
       </div>
     </>
   );
+
+  function hasContent(): boolean {
+      return noteContent.length > 0
+        || category.length > 0;
+  }
+
+  function clearAll() {
+    setNoteContent("");
+    setCategory("");
+  }
 
   function onCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
     setCategory(e.target.value);
@@ -136,8 +146,7 @@ export const NewNote = (props: Props): JSX.Element => {
     e.preventDefault();
     if (noteContent.length > 0 && category.length > 0) {
       props.onSubmit(newNote, props.id);
-      setNoteContent("");
-      setCategory("");
+      clearAll();
     } else {
       setHasError(true);
     }
