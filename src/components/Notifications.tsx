@@ -1,4 +1,4 @@
-import bell from "../assets/images/bell-3-128.png";
+import bell from "../assets/images/notification-bell.png";
 import Notifications from "react-notifications-menu";
 import { NotificationData } from "../interfaces/viewInterfaces";
 
