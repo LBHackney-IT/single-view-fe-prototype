@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Note } from "../interfaces/viewInterfaces";
 import { MentionsInput, Mention } from "react-mentions";
 import { authUser } from "../auth";
@@ -33,6 +33,10 @@ export const NewNote = (props: Props): JSX.Element => {
   const [noteContent, setNoteContent] = useState("");
   const [category, setCategory] = useState("");
   const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setHasError(false)
+  }, [noteContent, category]);
 
   let newNote: Note = {
     title: "Call to customer",
@@ -100,6 +104,15 @@ export const NewNote = (props: Props): JSX.Element => {
         </span>
       )}
       <div style={{ display: "flex", justifyContent: "end" }}>
+      <button
+            className="govuk-button lbh-button lbh-button--secondary"
+            style={{ marginTop: 0, marginRight: "0.618em" }}
+            onClick={() => setNoteContent("")}
+            aria-disabled={! noteContent}
+            disabled={! noteContent}
+        >
+          Clear All
+        </button>
         <button
             id="saveNote"
             className="govuk-button lbh-button lbh-button--secondary"
