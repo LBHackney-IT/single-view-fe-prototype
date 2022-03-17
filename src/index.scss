@@ -74,9 +74,8 @@ input:focus {
 
 .notificationsDiv {
   display: flex;
-  justify-content: flex-start unsafe;
-  margin: 5px 15px 0px 0px;
-  align-items: center;
+  margin: 0px 15px 0px 0px;
+  gap: -15px;
 }
 
 .sv-count {
