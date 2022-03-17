@@ -8,12 +8,13 @@ import {
 import { authUser, isLoggedIn, logout } from "./auth";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { ScratchPad } from "./components/ScratchPad";
-import { NotificationsComponent } from "./components/Notifications";
+import { NotificationsHeader } from "./components/NotificationHeader";
 import { SearchView } from "./views/search";
 import { LoginView } from "./views/login";
 import "./App.scss";
 import { NotificationData } from "./interfaces/viewInterfaces";
 import { RecordView } from "./views/record";
+import { Notifications } from "./components/Notifications";
 
 function App() {
   const loadData = (): void => {
@@ -110,7 +111,7 @@ function App() {
             </div>
             {isLoggedIn() && (
               <div className="lbh-header__links">
-                <NotificationsComponent />
+                <NotificationsHeader />
                 <p>{authUser.name}</p>
                 <a
                   href="/"
@@ -144,6 +145,9 @@ function App() {
             <Route path="/login">
               <LoginView />
             </Route>
+            <PrivateRoute exact path="/notifications">
+              <Notifications />
+            </PrivateRoute>
             <PrivateRoute exact path="/">
               <Redirect to="/search" />
             </PrivateRoute>

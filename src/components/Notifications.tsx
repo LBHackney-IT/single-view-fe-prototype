@@ -1,42 +1,18 @@
-import { useState } from "react";
-import bell from "../assets/images/bell-3-128.png";
-import Notifications from "react-notifications-menu";
+import { useEffect, useState } from "react";
 import { NotificationData } from "../interfaces/viewInterfaces";
 
-export const NotificationsComponent = (): JSX.Element => {
-  const [notificationCount, setNotificationCount] = useState(1);
-  const onNotificationClick = () => {
-    mockNotificationData.shift();
-    console.log(mockNotificationData);
-    localStorage.setItem("notifications", JSON.stringify(mockNotificationData));
-  };
+export const Notifications = (): JSX.Element => {
+  const [notificationData, setNotificationData] =
+    useState<NotificationData[]>();
 
-  let showNotificationPopup = false;
+  useEffect(() => {
+    let mockNotificationData: NotificationData[] = JSON.parse(
+      localStorage.getItem("notifications")
+    );
+    setNotificationData(mockNotificationData);
+  }, []);
 
-  const toggleNotificationPopup = () => {
-    console.log("toggling popup");
-    console.log(showNotificationPopup);
-    showNotificationPopup = !showNotificationPopup;
-    window.location.replace("/notifications");
-  };
+  console.log(notificationData);
 
-  let mockNotificationData: NotificationData[] = JSON.parse(
-    localStorage.getItem("notifications")
-  );
-
-  return (
-    <>
-      <p style={{ marginBottom: "10px" }}>Notifications</p>
-      <div className="notificationsDiv notification">
-        <img
-          className="notification-bell"
-          src={bell}
-          onClick={toggleNotificationPopup}
-        ></img>
-        {notificationCount > 0 && (
-          <p className="notification-count badge">{notificationCount}</p>
-        )}
-      </div>
-    </>
-  );
+  return <div>{notificationData[0]}</div>;
 };
