@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Note } from "../interfaces/viewInterfaces";
 import { MentionsInput, Mention } from "react-mentions";
 import { authUser } from "../auth";
@@ -33,6 +33,10 @@ export const NewNote = (props: Props): JSX.Element => {
   const [noteContent, setNoteContent] = useState("");
   const [category, setCategory] = useState("");
   const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setHasError(false)
+  }, [noteContent, category]);
 
   let newNote: Note = {
     title: "Call to customer",
@@ -100,20 +104,39 @@ export const NewNote = (props: Props): JSX.Element => {
         </span>
       )}
       <div style={{ display: "flex", justifyContent: "end" }}>
+      <button
+            className="govuk-button lbh-button lbh-button--secondary"
+            style={{ marginTop: 0, marginRight: "0.618em" }}
+            onClick={clearAll}
+            aria-disabled={! hasContent()}
+            disabled={! hasContent()}
+        >
+          Clear All
+        </button>
         <button
             id="saveNote"
             className="govuk-button lbh-button lbh-button--secondary"
             data-module="govuk-button"
             onClick={onNoteSubmit}
             style={{ marginTop: 0 }}
-            aria-disabled={! noteContent}
-            disabled={! noteContent}
+            aria-disabled={! hasContent()}
+            disabled={! hasContent()}
         >
             Save
         </button>
       </div>
     </>
   );
+
+  function hasContent(): boolean {
+      return noteContent.length > 0
+        || category.length > 0;
+  }
+
+  function clearAll() {
+    setNoteContent("");
+    setCategory("");
+  }
 
   function onCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
     setCategory(e.target.value);
@@ -123,8 +146,7 @@ export const NewNote = (props: Props): JSX.Element => {
     e.preventDefault();
     if (noteContent.length > 0 && category.length > 0) {
       props.onSubmit(newNote, props.id);
-      setNoteContent("");
-      setCategory("");
+      clearAll();
     } else {
       setHasError(true);
     }
