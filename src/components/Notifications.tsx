@@ -1,4 +1,3 @@
-import { useState } from "react";
 import bell from "../assets/images/bell-3-128.png";
 import Notifications from "react-notifications-menu";
 import { NotificationData } from "../interfaces/viewInterfaces";
@@ -21,6 +20,7 @@ export const NotificationsComponent = (): JSX.Element => {
         <Notifications
           data={mockNotificationData}
           icon={bell}
+          classNamePrefix="sv-notification"
           header={{
             title: "Notifications",
             option: { text: "Mark as read", onClick: onNotificationClick },
