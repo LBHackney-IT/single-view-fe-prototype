@@ -17,7 +17,11 @@ import { RecordView } from "./views/record";
 
 function App() {
   const loadData = (): void => {
-    if (localStorage.getItem("personData")) {
+    if (
+        localStorage.getItem("personData")
+        && localStorage.getItem("keyByPhone")
+        && localStorage.getItem("searchData")
+    ) {
       return;
     }
 
@@ -26,6 +30,7 @@ function App() {
       .then((res) => {
         let personData: any = {};
         let keyByPhone: any = {};
+        let searchData: any = {};
 
         for (let item in res) {
           let data = res[item];
@@ -33,10 +38,17 @@ function App() {
 
           personData[key] = data;
           keyByPhone[data.PersonalDetails.contacts[0].value] = key;
+          searchData[key] = {
+                addressLine1: data.PersonalDetails.Addresses[0].address_line_1,
+                dateOfBirth: data.PersonalDetails.date_of_birth,
+                firstName: data.PersonalDetails.first_name,
+                lastName: data.PersonalDetails.last_name,
+          };
         }
 
         localStorage.setItem("personData", JSON.stringify(personData));
         localStorage.setItem("keyByPhone", JSON.stringify(keyByPhone));
+        localStorage.setItem("searchData", JSON.stringify(searchData));
       })
       .then(() => {
         console.log("Data loaded");
@@ -137,35 +149,34 @@ function App() {
             </span>
           </p>
         </div>
-      </div>
-      <div className="lbh-container">
-        <Router>
-          <Switch>
-            <Route path="/login">
-              <LoginView />
-            </Route>
-            <PrivateRoute exact path="/">
-              <Redirect to="/search" />
-            </PrivateRoute>
-            <PrivateRoute exact path="/search">
-              <SearchView />
-            </PrivateRoute>
-            <PrivateRoute exact path="/records/:recordId">
-              <RecordView />
-            </PrivateRoute>
-            <Route>
-              <p className="lbh-body-s">404 - Page Not Found</p>
-            </Route>
-          </Switch>
-        </Router>
+        <main className="govuk-main-wrapper">
+            <Router>
+                <Switch>
+                    <Route path="/login">
+                        <LoginView />
+                    </Route>
+                    <PrivateRoute exact path="/">
+                        <Redirect to="/search" />
+                    </PrivateRoute>
+                    <PrivateRoute exact path="/search">
+                        <SearchView />
+                    </PrivateRoute>
+                    <PrivateRoute exact path="/records/:recordId">
+                        <RecordView />
+                    </PrivateRoute>
+                        <Route>
+                        <p className="lbh-body-s">404 - Page Not Found</p>
+                    </Route>
+                </Switch>
+            </Router>
 
-        {isLoggedIn() && (
-          <div className="scratchpad">
-            <ScratchPad />
-          </div>
-        )}
+            {isLoggedIn() && (
+            <div className="scratchpad">
+                <ScratchPad />
+            </div>
+            )}
+        </main>
       </div>
-      <footer>{/*  */}</footer>
     </div>
   );
 }
