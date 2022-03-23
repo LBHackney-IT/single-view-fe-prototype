@@ -74,3 +74,6 @@ dist
 # Terraform build output
 terraform/.terraform/*
 .terraform*
+
+# Config
+src/env.config.ts
