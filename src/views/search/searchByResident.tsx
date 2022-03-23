@@ -23,23 +23,15 @@ export const SearchByResident = () => {
   }, [dobDay, dobMonth, dobYear]);
 
   const createSearch = (): string => {
-    let searchTerm = "";
+    let searchTerms = [firstName, lastName, addressLine1, dateOfBirth];
 
-    if (firstName != "") {
-      searchTerm += firstName;
-    }
-    if (lastName != "") {
-      searchTerm += `+${lastName}`;
-    }
-    if (addressLine1 != "") {
-      let formattedAddress = addressLine1.replaceAll(" ", "+");
-      searchTerm += `+${formattedAddress}`;
-    }
-    if (dateOfBirth != "") {
-      searchTerm += `+${dateOfBirth}`;
-    }
+    let formattedSearch = searchTerms
+      .filter((term) => term !== "")
+      .join("+")
+      .replace(/-/g, "")
+      .replace(/\+$/, "");
 
-    return searchTerm;
+    return formattedSearch;
   };
 
   const search = () => {
