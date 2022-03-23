@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 
 type searchParams = {
   firstName?: string;
@@ -7,7 +8,64 @@ type searchParams = {
   postCode?: string;
 };
 
-export const SearchByResident = (searchParams: searchParams): Promise<any> => {
+export const searchComponent = (props: any) => {
+  const [searchParams, setSearchParams] = useState<searchParams>();
+  return (
+    <>
+      <div>SearchComponent</div>
+      <div className="govuk-form-group lbh-form-group">
+        <label className="govuk-label lbh-label">First name</label>
+        <input
+          className="govuk-input lbh-input"
+          id="search"
+          name="search"
+          type="search"
+          value={searchParams.firstName}
+          onChange={(e) => {
+            setSearchParams({ ...searchParams, firstName: e.target.value });
+          }}
+        />
+      </div>
+      <div className="govuk-form-group lbh-form-group">
+        <label className="govuk-label lbh-label">Last name</label>
+        <input
+          className="govuk-input lbh-input"
+          id="search"
+          name="search"
+          type="search"
+          value={searchParams.lastName}
+          onChange={(e) => {
+            setSearchParams({ ...searchParams, lastName: e.target.value });
+          }}
+        />
+      </div>
+      <div className="govuk-form-group lbh-form-group">
+        <label className="govuk-label lbh-label">Date of Birth</label>
+        <input
+          className="govuk-input lbh-input"
+          id="search"
+          name="search"
+          type="search"
+          placeholder="dd/mm/yyyy"
+          value={searchParams.dateOfBirth}
+          onChange={(e) => {
+            setSearchParams({ ...searchParams, dateOfBirth: e.target.value });
+          }}
+        />
+      </div>
+
+      <button
+        onClick={() => SearchByResident(searchParams)}
+        className="govuk-button lbh-button"
+        data-module="govuk-button"
+      >
+        Save and continue
+      </button>
+    </>
+  );
+};
+
+const SearchByResident = (searchParams: searchParams): Promise<any> => {
   let result;
 
   try {
@@ -16,8 +74,7 @@ export const SearchByResident = (searchParams: searchParams): Promise<any> => {
         `${process.env.SEARCH_API_STAGING_URL}/search/persons?postcode=${searchParams.postCode}`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.HOUSING_SEARCH_API_TOKEN}`,
-            "Content-Type": "application/json",
+            Authorization: `${process.env.HOUSING_SEARCH_API_TOKEN}`,
           },
         }
       );
