@@ -28,8 +28,9 @@ export const SearchByResident = () => {
     let formattedSearch = searchTerms
       .filter((term) => term !== "")
       .join("+")
-      .replace(/-/g, "")
-      .replace(/\+$/, "");
+      .replace(/--/g, "")
+      .replace(/\+$/, "")
+      .replace(/' '/g, "");
 
     return formattedSearch;
   };
