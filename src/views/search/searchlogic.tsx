@@ -5,8 +5,8 @@ export const SearchByResidentFunction = async (
   searchParams: string
 ): Promise<any> => {
   const response = await axios.get(
-    `${config.PROTOTYPE_URL}/search?SearchText=${searchParams}`
+    `${config.PROTOTYPE_URL}/search?searchText=${searchParams}`
   );
-  console.log(response.data);
+  console.log(response.data.body);
   return response.data;
 };

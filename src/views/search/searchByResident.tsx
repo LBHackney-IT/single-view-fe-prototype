@@ -1,3 +1,4 @@
+import { create } from "domain";
 import { useEffect, useState } from "react";
 import { SearchByResidentFunction } from "./searchlogic";
 
@@ -20,6 +21,26 @@ export const SearchByResident = () => {
         (dobDay.length == 1 ? "0" + dobDay : dobDay)
     );
   }, [dobDay, dobMonth, dobYear]);
+
+  const createSearch = (): string => {
+    let searchTerm = "";
+
+    if (firstName != "") {
+      searchTerm += firstName;
+    }
+    if (lastName != "") {
+      searchTerm += `+${lastName}`;
+    }
+    if (addressLine1 != "") {
+      let formattedAddress = addressLine1.replaceAll(" ", "+");
+      searchTerm += `+${formattedAddress}`;
+    }
+    if (dateOfBirth != "") {
+      searchTerm += `+${dateOfBirth}`;
+    }
+
+    return searchTerm;
+  };
 
   const search = () => {
     let results = [];
@@ -74,13 +95,12 @@ export const SearchByResident = () => {
 
   return (
     <>
-      <h3 className="lbh-heading-h3">Search by resident</h3>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              SearchByResidentFunction("Test search");
+              SearchByResidentFunction(createSearch());
             }}
           >
             <div className="govuk-form-group lbh-form-group">
